@@ -71,7 +71,7 @@ function timeStatus1(value){
     if (newDate.getFullYear() < 1900) {
         return "";
     }
-    var val = newDate.format("yyyy-MM-dd hh:mm:ss");
+    var val = newDate.format("yyyy-MM-dd");
     return val;
 }
 function destroyOrder(){
