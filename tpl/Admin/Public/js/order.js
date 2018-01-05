@@ -58,7 +58,7 @@ function editOrder(){
 
         $('#editOrderForm').form('load',row);
         $('#editStartdate1').datetimebox('setValue', time);
-          url =editOrderUrl+'/id/'+row.id;
+        url =editOrderUrl+'/id/'+row.id;
     }
 }
 
@@ -132,7 +132,7 @@ function ajaxCarList(){
         var waitAssembleTrans=$("#transListForPrint").find("li[id!='transTitle']");
         if (waitAssembleTrans.length<=0) {
             $.messager.alert('错误提示','请选择要装车的运单!','error');
-          //  alert("请选择要装车的运单！");
+            //  alert("请选择要装车的运单！");
             return false;
         }
         var checkedItems = $('#OrderGrid').datagrid('getChecked');
@@ -144,29 +144,29 @@ function ajaxCarList(){
         ids=ids.join("@@");
 
 
-   /* var row = $('#OrderGrid').datagrid('getSelected');
-    if(row==null){
-        $.messager.alert('Warning',"请选择运单", 'info');return false;
-    }*/
-    $('#carorderDlg').dialog('open').dialog('setTitle','发车列表');
-    $('#carorderGrid').datagrid({
-        url:ajaxCarUrl+'/orderid/'+ids,
-        columns:[[
-            {field:'orderid',title:'运单id',width:10,hidden:'true'},
-            {field:'driver',title:'司机',width:80},
-            {field:'carnumber',title:'车牌号',width:110},
-            {field:'number',title:'车次',width:150},
-            {field:'startdate',title:'发车时间',width:150,formatter:Common.TimeFormatter},
-            {field:'cardriveid',title:'发车id',width:10,hidden:'true'},
-            {field:'opt',title:'操作',width:50,align:'center',
-                formatter:function(value,row,index){
-                    console.log("roworderid:"+row.orderid+"rowcardriveid"+row.cardriveid);
-                    var btn = '<a class="editcls" onclick="chooseCar(\''+row.orderid+'\',\''+row.cardriveid+'\')" href="javascript:void(0)">装车</a>';
-                    return btn;
+        /* var row = $('#OrderGrid').datagrid('getSelected');
+         if(row==null){
+         $.messager.alert('Warning',"请选择运单", 'info');return false;
+         }*/
+        $('#carorderDlg').dialog('open').dialog('setTitle','发车列表');
+        $('#carorderGrid').datagrid({
+            url:ajaxCarUrl+'/orderid/'+ids,
+            columns:[[
+                {field:'orderid',title:'运单id',width:10,hidden:'true'},
+                {field:'driver',title:'司机',width:80},
+                {field:'carnumber',title:'车牌号',width:110},
+                {field:'number',title:'车次',width:150},
+                {field:'startdate',title:'发车时间',width:150,formatter:Common.TimeFormatter},
+                {field:'cardriveid',title:'发车id',width:10,hidden:'true'},
+                {field:'opt',title:'操作',width:50,align:'center',
+                    formatter:function(value,row,index){
+                        console.log("roworderid:"+row.orderid+"rowcardriveid"+row.cardriveid);
+                        var btn = '<a class="editcls" onclick="chooseCar(\''+row.orderid+'\',\''+row.cardriveid+'\')" href="javascript:void(0)">装车</a>';
+                        return btn;
+                    }
                 }
-            }
-        ]]
-      });
+            ]]
+        });
     });
 }
 function shiperList(){
@@ -186,7 +186,7 @@ function shiperList(){
         ]]
 
     });
-    }
+}
 
 function  receiveList(){
     $('#receiveDlg').dialog('open').dialog('setTitle','收货人列表');
@@ -244,11 +244,11 @@ function chooseShipper(shipper,shippertel,id){
         $.messager.alert('Warning',"请选择发货人", 'info');return false;
     }
     if(row){
-            $('#addShipper').textbox('setValue', shipper);
-            $('#addShippertel').textbox('setValue', shippertel);
-            $('#addSid').val(id);
-            $('#shiperDlg').dialog('close');
-            $('#addOrderForm').form('load',row);
+        $('#addShipper').textbox('setValue', shipper);
+        $('#addShippertel').textbox('setValue', shippertel);
+        $('#addSid').val(id);
+        $('#shiperDlg').dialog('close');
+        $('#addOrderForm').form('load',row);
     }
 }
 function chooseCar1(orderid,cardriveid){
@@ -256,7 +256,7 @@ function chooseCar1(orderid,cardriveid){
     var row = $('#carorderGrid').datagrid('getSelected');//发车行
     var orderid=orderid;//运单id
     var cardriveid=cardriveid;//发车id
- //   alert(orderid+"..."+cardriveid);
+    //   alert(orderid+"..."+cardriveid);
     if(row==null){
         $.messager.alert('Warning',"请选择发车", 'info');return false;
     }
@@ -285,9 +285,9 @@ function timeStatus(val,rowData,row){
     if(val==null){
         return "";
     }else{
-    // return  Common.DateTimeFormatter(val);
+        // return  Common.DateTimeFormatter(val);
         //console.log(timess);
-   return Common.TimeFormatter(val);
+        return Common.TimeFormatter(val);
     }
 }
 function Status(val,rowData,row){
@@ -327,7 +327,7 @@ function lookOrder(){
 
 
 
-function print(inventoryId){
+function print1(inventoryId){
     if (inventoryId=='view') {
         id=$("#lookId").val();
     }
@@ -335,11 +335,11 @@ function print(inventoryId){
     $.getJSON(purl,{id:id,r:Math.random()},function(data){
 
         var LODOP=getLodop(document.getElementById('LODOP'),document.getElementById('LODOP_EM'));
-       LODOP.PRINT_INIT("");
+        LODOP.PRINT_INIT("");
         LODOP.SET_PRINT_STYLE("FontSize",12);
         LODOP.ADD_PRINT_TEXT(110,40,200,27,data[0].assembledate);//打印时间
         LODOP.ADD_PRINT_TEXT(158,50,98,27,data[0].shipper);//托运人姓名
-       // LODOP.ADD_PRINT_TEXT(186,413,110,24,data.printtime);//
+        // LODOP.ADD_PRINT_TEXT(186,413,110,24,data.printtime);//
         LODOP.ADD_PRINT_TEXT(150,435,115,25,data[0].shippertel);//电话
         LODOP.ADD_PRINT_TEXT(193,50,105,22,data[0].receivername);//收获人名称
         LODOP.ADD_PRINT_TEXT(190,235,170,28,data[0].receiveraddress);//收货地址
@@ -356,7 +356,7 @@ function print(inventoryId){
         LODOP.ADD_PRINT_TEXT(260,155,79,47,data[0].goodsweight+goodsunit);//重量
         LODOP.ADD_PRINT_TEXT(270,300,104,25,data[0].goodsinsurance);//保险金额
         LODOP.ADD_PRINT_TEXT(270,480,72,28,data[0].insurance);//保险费
-      //  LODOP.ADD_PRINT_TEXT(310,50,300,28,data[0].countfee);//合计金额.rmb
+        //  LODOP.ADD_PRINT_TEXT(310,50,300,28,data[0].countfee);//合计金额.rmb
         LODOP.ADD_PRINT_TEXT(310,460,72,28,data[0].countfee);//合计金额
         if (data[0].paytype=="1"){
             paytype="欠付";
@@ -371,31 +371,31 @@ function print(inventoryId){
             col=data[0].col;
         }
 
-       LODOP.ADD_PRINT_TEXT(347,50,180,25,paytype+"    "+col);//付款方式。备注表格字段没有添加
-     //   LODOP.ADD_PRINT_TEXT(320,420,77,35,json.printuser);//经办人经办人没有添加
+        LODOP.ADD_PRINT_TEXT(347,50,180,25,paytype+"    "+col);//付款方式。备注表格字段没有添加
+        //   LODOP.ADD_PRINT_TEXT(320,420,77,35,json.printuser);//经办人经办人没有添加
         LODOP.PREVIEW();
     });
 }
 
 
 /*$(document).ready(init);
-function init() {
-    $('#OrderGrid').datagrid({
-        onLoadSuccess:function(data){
-            if(data){
-                $.each(data.rows, function(index, item){
-                    if(item.checked){
-                        $('#OrderGrid').datagrid('checkRow', index);
-                    }
-                });
-            }
-        }
-    });
-}*/
+ function init() {
+ $('#OrderGrid').datagrid({
+ onLoadSuccess:function(data){
+ if(data){
+ $.each(data.rows, function(index, item){
+ if(item.checked){
+ $('#OrderGrid').datagrid('checkRow', index);
+ }
+ });
+ }
+ }
+ });
+ }*/
 
 function  ajaxCarcancle(){
     $("#carcancleButton").click(function(){
-      var i= $('#OrderGrid').datagrid('getSelections');//获取当前选中
+        var i= $('#OrderGrid').datagrid('getSelections');//获取当前选中
         $('#OrderGrid').datagrid('clearSelections');
     });
 }
@@ -413,7 +413,7 @@ function print(inventoryId,transNo){
     var count=$("#transListForPrint").find("li");
     if (count.length>16) {
         $.messager.alert('错误提示','最多只能同时装车十六个运单！','error');
-       // alert("最多只能同时装车十六个运单！");
+        // alert("最多只能同时装车十六个运单！");
         return false;
     }
     var single=$("#transListForPrint").find("li[id='"+inventoryId+"']");
@@ -421,7 +421,7 @@ function print(inventoryId,transNo){
         $("#transListForPrint").append("<li class='transListLI' id='"+inventoryId+"'>"+transNo+"<span class='deleteSpan' onclick='deleteTransId("+inventoryId+");'></span></li>");
     }else {
         $.messager.alert('错误提示','此运单已经添加！','error');
-     //   alert("此运单已经添加！");
+        //   alert("此运单已经添加！");
         return false;
     }
 
@@ -453,7 +453,7 @@ function chooseCar (orderid,cardriveid) {
     var waitAssembleTranIds="";
     if (waitAssembleTrans.length>0) {
         waitAssembleTrans.each (function (index){
-           // waitAssembleTranIds=$(this).attr("id").join("@@");
+            // waitAssembleTranIds=$(this).attr("id").join("@@");
             waitAssembleTranIds+=$(this).attr("id")+"@@";
         });
         var durl=chooseCarUrl;//装车更新哪一个数据库表
