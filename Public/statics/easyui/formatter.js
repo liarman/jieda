@@ -13,7 +13,7 @@ var Common = {
         if (newDate.getFullYear() < 1900) {
             return "";
         }
-        var val = newDate.format("yyyy-MM-dd hh");
+        var val = newDate.format("yyyy-MM-dd");
         return val;
     },
     DateTimeFormatter: function (value, rec, index) {
