@@ -31,7 +31,7 @@ class OrderController extends AdminBaseController{
             $sql.=" and o.shipper like '%s'";
             array_push($param,'%'.$shipper.'%');
         }
-        $sql.=" order by o.createdate desc limit %d,%d ";
+        $sql.=" order by o.createdate desc,o.id desc limit %d,%d ";
         array_push($param,$offset);
         array_push($param,$rows);
         $data=D('Order')->query($countsql,$param);
@@ -75,7 +75,8 @@ class OrderController extends AdminBaseController{
     public function edit(){
         if(IS_POST){
             $data=I('post.');
-            $where['id']=$data['id'];
+            $type = $_POST['id'];
+            $where['id']=$type;
             $data['createdate']=strtotime(I('post.createdate'));
             $data['cardriveid']="";
             $data['status']="0";
