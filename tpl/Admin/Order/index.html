@@ -69,19 +69,19 @@
     <a href="javascript:void(0)" class="easyui-linkbutton" onclick="doSearch()" iconCls="icon-search">搜索</a>
 </div>
 <!--添加-->
-<div id="addOrder" class="easyui-dialog" title="添加" style="width:900px;height:500px;padding:10px 20px;" closed="true" modal="true">
+<div id="addOrder" class="easyui-dialog" title="添加" style="width:1000px;height:500px;padding:10px 20px;" closed="true" modal="true">
     <form id="addOrderForm" method="post">
         <input name="shipperid" id="addSid"  type="hidden"  />
         <table>
             <tr>
                 <td align="right">
                     发货人姓名:<input name="shipper" style="width: 230px" class="easyui-textbox" data-options="delay:1000,required:true " />
-                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" plain="true" onclick="shiperList()">选择</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" style="width: 70px" iconCls="fa fa-plus" plain="true" onclick="shiperList()">选择</a>
                 </td>
 
                 <td align="right">
                     收货人姓名:<input name="receivername"  style="width: 230px" class="easyui-textbox" data-options="delay:1000,required:true " />
-                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" plain="true" onclick="receiveList()">选择</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton"   style="width: 70px" iconCls="fa fa-plus" plain="true" onclick="receiveList()">选择</a>
                 </td>
 
             </tr>
@@ -104,7 +104,7 @@
             <tr>
                 <td align="right">重量:<input name="goodsweight" class="easyui-numberbox"style="width: 300px"   data-options="delay:1000" /></td>
 
-                <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单位:
+                <td align="right">单位:
                     <select  panelMaxHeight="100px" name="goodsunit" class="easyui-combobox" style="width:300px" data-options="delay:1000,multiple:false">
                         <option value="1">千克</option>
                         <option value="2">箱</option>
@@ -125,7 +125,7 @@
 
             </tr>
             <tr>
-                <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;付款方式:
+                <td align="right">付款方式:
                     <select  panelMaxHeight="100px" name="paytype" class="easyui-combobox" style="width:300px" data-options="delay:1000,required:true,multiple:false">
                         <option value="1">欠付</option>
                         <option value="2">货到付款</option>
@@ -133,7 +133,7 @@
                     </select>
 
                 </td>
-                <td align="right">托运时间: <input name="createdate" class="easyui-datetimebox" style="width: 300px" data-options="delay:1000" /></td>
+                <td align="right">托运时间: <input name="createdate" class="easyui-datebox" style="width: 300px" data-options="delay:1000" /></td>
             </tr>
             <tr>
                 <td align="right">备注:
@@ -208,7 +208,7 @@
                     </select>
                 </td>
 
-                <td align="right">托运时间: <input id="editStartdate1" name="createdate" class="easyui-datetimebox" style="width: 300px" data-options="delay:1000" /></td>
+                <td align="right">托运时间: <input id="editStartdate1" name="createdate" class="easyui-datebox" style="width: 300px" data-options="delay:1000" /></td>
 
             </tr>
 
@@ -292,7 +292,7 @@
                     </select>
                 </td>
 
-                <td align="right">托运时间: <input id="lookcreatedate" name="createdate" class="easyui-datetimebox" style="width: 300px" data-options="delay:1000" /></td>
+                <td align="right">托运时间: <input id="lookcreatedate" name="createdate" class="easyui-datebox" style="width: 300px" data-options="delay:1000" /></td>
 
             </tr>
             <tr>
