@@ -380,17 +380,22 @@ function print1(inventoryId){
 
 /*$(document).ready(init);
  function init() {
- $('#OrderGrid').datagrid({
- onLoadSuccess:function(data){
- if(data){
- $.each(data.rows, function(index, item){
- if(item.checked){
- $('#OrderGrid').datagrid('checkRow', index);
- }
- });
- }
- }
- });
+     $('#OrderGrid').datagrid({
+         onClickRow: function (rowIndex) {
+             if (oldRowIndex == rowIndex) {
+                 $('#OrderGrid').datagrid('clearSelections', oldRowIndex);
+             }
+             var selectRow = $('#OrderGrid').datagrid('getSelected');
+             oldRowIndex = $('#OrderGrid').datagrid('getRowIndex', selectRow);
+         },
+         rowStyler: function (rowIndex, rowData) {
+             //根据某一行某列的值的范围将某一行改变颜色
+             if (rowData.JSON_cwuzhongcount<87) {
+                 return 'background-color:red;';
+             }
+         }
+
+     });
  }*/
 
 function  ajaxCarcancle(){
