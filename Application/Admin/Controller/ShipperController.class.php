@@ -13,7 +13,7 @@ class ShipperController extends AdminBaseController{
         $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
         $rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
         $offset = ($page-1)*$rows;
-        $countsql ="select count(id) AS total from qfant_shipper s where 1=1";
+        $countsql ="select count(id) AS total from qfant_shipper s where 1=1 ";
         $sql ="select * from qfant_shipper s where 1=1";
 
         $param=array();
@@ -29,7 +29,7 @@ class ShipperController extends AdminBaseController{
         }
         array_push($param,$offset);
         array_push($param,$rows);
-        $sql.=" limit %d,%d";
+        $sql.="  order by s.id desc   limit %d,%d";
         $data=D('Shipper')->query($countsql,$param);
         $result['total']=$data[0]['total'];
         $data=D('Shipper')->query($sql,$param);
