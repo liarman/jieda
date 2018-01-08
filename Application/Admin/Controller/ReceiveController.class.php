@@ -35,7 +35,7 @@ class ReceiveController extends AdminBaseController{
         }
         array_push($param,$offset);
         array_push($param,$rows);
-        $sql.=" limit %d,%d";
+        $sql.="  order by s.id desc  limit %d,%d";
         $data=D('Receive')->query($countsql,$param);
         $result['total']=$data[0]['total'];
         $data=D('Receive')->query($sql,$param);
