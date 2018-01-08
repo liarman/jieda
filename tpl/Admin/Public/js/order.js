@@ -327,54 +327,57 @@ function lookOrder(){
 
 
 
-function print1(inventoryId){
-    if (inventoryId=='view') {
-        id=$("#lookId").val();
+function print1(id){
+ //   var row = $('#OrderGrid').datagrid('getSelected');
+    if(id==null){
+        $.messager.alert('Warning',"请选择要打印的行", 'info');return false;
     }
-    var purl =lookUrl;
-    $.getJSON(purl,{id:id,r:Math.random()},function(data){
+   if (id) {
+        id=id;
+        var purl =lookUrl;
+        $.getJSON(purl,{id:id,r:Math.random()},function(data){
+            var LODOP=getLodop(document.getElementById('LODOP'),document.getElementById('LODOP_EM'));
+            LODOP.PRINT_INIT("");
+            LODOP.SET_PRINT_STYLE("FontSize",12);
+            LODOP.ADD_PRINT_TEXT(110,40,200,27,data[0].assembledate);//打印时间
+            LODOP.ADD_PRINT_TEXT(158,50,98,27,data[0].shipper);//托运人姓名
+            // LODOP.ADD_PRINT_TEXT(186,413,110,24,data.printtime);//
+            LODOP.ADD_PRINT_TEXT(150,435,115,25,data[0].shippertel);//电话
+            LODOP.ADD_PRINT_TEXT(193,50,105,22,data[0].receivername);//收获人名称
+            LODOP.ADD_PRINT_TEXT(190,235,170,28,data[0].receiveraddress);//收货地址
+            LODOP.ADD_PRINT_TEXT(190,435,120,20,data[0].receivertel);//收货电话
+            LODOP.ADD_PRINT_TEXT(260,0,109,52,data[0].goodsname);//货物名称
+            LODOP.ADD_PRINT_TEXT(260,100,66,47,data[0].goodscount);//件数
+            if (data[0].goodsunit=="1"){
+                goodsunit="千克";
+            }else if (data[0].goodsunit=="2") {
+                goodsunit="箱";
+            }else {
+                goodsunit="";
+            }
+            LODOP.ADD_PRINT_TEXT(260,155,79,47,data[0].goodsweight+goodsunit);//重量
+            LODOP.ADD_PRINT_TEXT(270,300,104,25,data[0].goodsinsurance);//保险金额
+            LODOP.ADD_PRINT_TEXT(270,480,72,28,data[0].insurance);//保险费
+            //  LODOP.ADD_PRINT_TEXT(310,50,300,28,data[0].countfee);//合计金额.rmb
+            LODOP.ADD_PRINT_TEXT(310,460,72,28,data[0].countfee);//合计金额
+            if (data[0].paytype=="1"){
+                paytype="欠付";
+            }else if (data[0].paytype=="2") {
+                paytype="货到付款";
+            }else if(data[0].paytype=="3"){
+                paytype="现付";
+            }
+            if(data[0].col==null){
+                col="";
+            }else{
+                col=data[0].col;
+            }
 
-        var LODOP=getLodop(document.getElementById('LODOP'),document.getElementById('LODOP_EM'));
-        LODOP.PRINT_INIT("");
-        LODOP.SET_PRINT_STYLE("FontSize",12);
-        LODOP.ADD_PRINT_TEXT(110,40,200,27,data[0].assembledate);//打印时间
-        LODOP.ADD_PRINT_TEXT(158,50,98,27,data[0].shipper);//托运人姓名
-        // LODOP.ADD_PRINT_TEXT(186,413,110,24,data.printtime);//
-        LODOP.ADD_PRINT_TEXT(150,435,115,25,data[0].shippertel);//电话
-        LODOP.ADD_PRINT_TEXT(193,50,105,22,data[0].receivername);//收获人名称
-        LODOP.ADD_PRINT_TEXT(190,235,170,28,data[0].receiveraddress);//收货地址
-        LODOP.ADD_PRINT_TEXT(190,435,120,20,data[0].receivertel);//收货电话
-        LODOP.ADD_PRINT_TEXT(260,0,109,52,data[0].goodsname);//货物名称
-        LODOP.ADD_PRINT_TEXT(260,100,66,47,data[0].goodscount);//件数
-        if (data[0].goodsunit=="1"){
-            goodsunit="千克";
-        }else if (data[0].goodsunit=="2") {
-            goodsunit="箱";
-        }else {
-            goodsunit="";
-        }
-        LODOP.ADD_PRINT_TEXT(260,155,79,47,data[0].goodsweight+goodsunit);//重量
-        LODOP.ADD_PRINT_TEXT(270,300,104,25,data[0].goodsinsurance);//保险金额
-        LODOP.ADD_PRINT_TEXT(270,480,72,28,data[0].insurance);//保险费
-        //  LODOP.ADD_PRINT_TEXT(310,50,300,28,data[0].countfee);//合计金额.rmb
-        LODOP.ADD_PRINT_TEXT(310,460,72,28,data[0].countfee);//合计金额
-        if (data[0].paytype=="1"){
-            paytype="欠付";
-        }else if (data[0].paytype=="2") {
-            paytype="货到付款";
-        }else if(data[0].paytype=="3"){
-            paytype="现付";
-        }
-        if(data[0].col==null){
-            col="";
-        }else{
-            col=data[0].col;
-        }
-
-        LODOP.ADD_PRINT_TEXT(347,50,180,25,paytype+"    "+col);//付款方式。备注表格字段没有添加
-        //   LODOP.ADD_PRINT_TEXT(320,420,77,35,json.printuser);//经办人经办人没有添加
-        LODOP.PREVIEW();
-    });
+            LODOP.ADD_PRINT_TEXT(347,50,180,25,paytype+"    "+col);//付款方式。备注表格字段没有添加
+            //   LODOP.ADD_PRINT_TEXT(320,420,77,35,json.printuser);//经办人经办人没有添加
+            LODOP.PREVIEW();
+        });
+    }
 }
 
 
@@ -410,7 +413,8 @@ function formatOper(val,row,index){
     var btn1 = '<a class="editcls" onclick="destroyOrder(\''+row.id+'\')" href="javascript:void(0)">删除</a>';
     var btn2 = '<a class="editcls" onclick="lookOrder(\''+row.id+'\')" href="javascript:void(0)">查看</a>';
     var print = '<a class="editcls" onclick="print(\''+row.id+'\',\''+row.orderno+'\')" href="javascript:void(0)">添加到装车列表</a>';
-    var btnop = btn+"  "+btn1+"  "+btn2+" "+ print;
+    var print1 = '<a class="editcls" onclick="print1(\''+row.id+'\')" href="javascript:void(0)">打印</a>';
+    var btnop = btn+"  "+btn1+"  "+btn2+" "+ print+" "+ print1;
     return btnop;
 }
 
