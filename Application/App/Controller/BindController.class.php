@@ -172,13 +172,15 @@ class BindController extends WapController{
 	}
 	public  function driveRoute(){
 		$cardriveid=I("get.cardriveid");
+		$wecha_id=I("get.wecha_id");
 		if($cardriveid){
 			$sql ="SELECT r.name,c3.arrivedate FROM qfant_route AS r,qfant_car AS c1,qfant_cardrive AS c2,qfant_cardriveroute AS c3 WHERE c3.cardriveid = '$cardriveid' AND c3.cardriveid = c2.id AND c3.routeid = r.id AND c2.carid = c1.id ;";
-			$data=D('Order')->query($sql,"");
+			$data=D('Cardriveroute')->query($sql,"");
 			foreach ($data as $key=>$basevalue){
 				$data[$key]['arrivedate']=date('Y-m-d H:i' , $basevalue['arrivedate']) ;
 			}
 			$this->assign("driveRoute",$data);
+			$this->assign("wecha_id",$wecha_id);
 			$this->display('driveRoute');
 		}
 	}
