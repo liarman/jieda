@@ -1,8 +1,8 @@
 <?php
 return array(
 //*************************************附加设置***********************************
-    'GLOBAL_PIC_URL'        => 'http://jieda.qfant.com',                           // 是否显示调试面板
-    'GLOBAL_DOMAIN_URL'        => 'http://jieda.qfant.com',                           // 是否显示调试面板
+    'GLOBAL_PIC_URL'        => 'http://hr.qfant.com',                           // 是否显示调试面板
+    'GLOBAL_DOMAIN_URL'        => 'http://hr.qfant.com',                           // 是否显示调试面板
     'SHOW_PAGE_TRACE'        => false,                           // 是否显示调试面板
     'URL_CASE_INSENSITIVE'   => false,                           // url区分大小写
     'TAGLIB_BUILD_IN'        => 'Cx,Common\Tag\My',              // 加载自定义标签
