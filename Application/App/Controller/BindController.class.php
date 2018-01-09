@@ -17,7 +17,8 @@ class BindController extends WapController{
 		
         if(IS_POST){
             $key=I('post.key');
-            $wecha_id=I('post.wecha_id');
+			$wecha_id=$this->wecha_id;
+           // $wecha_id=I('post.wecha_id');
             $bindk=$bindkeyModel->where(array('key'=>$key,'status'=>1))->find();
 			if($wecha_id){
 				 if(empty($bindk)){
