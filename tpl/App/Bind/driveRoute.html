@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,9 +18,9 @@
 </header>
 <footer class="ui-footer ui-footer-btn">
     <ul class="ui-tiled ui-border-t">
-        <li data-href="{:U('App/Bind/myOrder',array('wecha_id'=>1234))}" class="ui-border-r"><div>我的订单</div></li>
-        <li data-href="{:U('App/Bind/mySend')}" class="ui-border-r"><div>我要发件</div></li>
-        <li data-href="{:U('App/Bind/myInfo',array('wecha_id'=>1234))}"><div>个人中心</div></li>
+        <li data-href="{:U('App/Bind/myOrder',array('wecha_id'=>$wecha_id))}" class="ui-border-r"><div>我的订单</div></li>
+        <li data-href="{:U('App/Bind/mySend',array('wecha_id'=>$wecha_id))}" class="ui-border-r"><div>我要发件</div></li>
+        <li data-href="{:U('App/Bind/myInfo',array('wecha_id'=>$wecha_id))}"><div>个人中心</div></li>
     </ul>
 </footer>
 <section class="ui-container">
@@ -47,22 +45,8 @@
         </form>
     </div>
 
-
-  <!--  <div class="ui-btn-wrap">
-        <button class="ui-btn-lg ui-btn-primary" id="myinfoSubmit">
-            确定
-        </button>
-    </div>
-
-    <div class="ui-btn-wrap">
-        <button class="ui-btn-lg ui-btn-primary">
-            解除绑定
-        </button>
-    </div>-->
-
 </section>
 
-<!-- /.ui-container-->
 <script>
     $('.ui-list li,.ui-tiled li').click(function(){
         if($(this).data('href')){
@@ -70,34 +54,9 @@
         }
     });
     $('.ui-header .ui-btn').click(function(){
-        location.href= "{:U('App/Bind/myInfo',array('wecha_id'=>1234))}";
+        location.href= "{:U('App/Bind/myInfo',array('wecha_id'=>$wecha_id))}";
     });
 
-  /*  $("#myinfoSubmit").on("click",function(){
-        var name=$('#name').val();
-        var phone=$('#phone').val();
-
-        if(name==""){
-            alert('收件人姓名不能为空');
-            return false;
-        }
-        if(phone==""){
-            alert('收件人电话不能为空');
-            return false;
-        }
-        var reg = /^1[3|4|5|7|8|9]\d{9}$/;
-        if(!reg.test(phone)){
-            alert("手机号输入不正确");return false;
-        }
-        $.post("{:U('App/Bind/myInfoEdit')}", $('#myInfoForm').serialize(), function(message){
-            if(message.status==1){
-                alert( message.message);
-            }else {
-                alert( message.message);
-            }
-
-        })
-    });*/
 </script>
 </body>
 </html>

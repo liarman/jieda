@@ -77,7 +77,9 @@
                   } else {
                       var content = "";
                       for (var i = 0; i < data.length; i++) {
-                          var url= "{:U('App/Bind/driveRoute')}/cardriveid/"+data[i].cardriveid+"";
+                          var url= "{:U('App/Bind/driveRoute')}/cardriveid/"+data[i].cardriveid+"/wecha_id/"+data[i].wecha_id;
+                          var editurl= "{:U('App/Bind/EditMyOrder')}/id/"+data[i].id+"";    //编辑订单url
+                          var ids="'"+data[i].id+"'";
                           content = content
                                   + ' <li> <div class="ui-list-info ui-border-t"><h4 class="ui-nowrap">订单编号' + data[i].orderno + '</h4>'
                                   + '<p class="ui-nowrap">收件人：' +data[i].receivername + '<br/>收件人电话：' + data[i].receivertel + '<br/>收件人地址：'
@@ -89,7 +91,7 @@
                   var content = "";
 
                       for (var i = 0; i < data.length; i++) {
-                     var url= "{:U('App/Bind/driveRoute')}/cardriveid/"+data[i].cardriveid+"";//轨迹url
+                     var url= "{:U('App/Bind/driveRoute')}/cardriveid/"+data[i].cardriveid+"/wecha_id/"+data[i].wecha_id;//轨迹url
                       var editurl= "{:U('App/Bind/EditMyOrder')}/id/"+data[i].id+"";    //编辑订单url
                       var ids="'"+data[i].id+"'";
 
