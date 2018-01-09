@@ -3,7 +3,7 @@ namespace Common\Controller;
 use Common\Controller\BaseController;
 class WapController extends BaseController{
 	public $token;
-	public $wecha_id;
+	public $wecha_id="1234";
 	public $siteUrl;
 	public $fans;
 	public $homeInfo;
