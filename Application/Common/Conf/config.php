@@ -1,8 +1,8 @@
 <?php
 return array(
 //*************************************附加设置***********************************
-    'GLOBAL_PIC_URL'        => 'http://jieda.qfant.com',                           // 是否显示调试面板
-    'GLOBAL_DOMAIN_URL'        => 'http://jieda.qfant.com',                           // 是否显示调试面板
+    'GLOBAL_PIC_URL'        => 'http://hr.qfant.com',                           // 是否显示调试面板
+    'GLOBAL_DOMAIN_URL'        => 'http://hr.qfant.com',                           // 是否显示调试面板
     'SHOW_PAGE_TRACE'        => false,                           // 是否显示调试面板
     'URL_CASE_INSENSITIVE'   => false,                           // url区分大小写
     'TAGLIB_BUILD_IN'        => 'Cx,Common\Tag\My',              // 加载自定义标签
@@ -48,8 +48,8 @@ return array(
     'TMPL_ACTION_SUCCESS'    => TMPL_PATH.'/Public/dispatch_jump.tpl', // 默认成功跳转对应的模板文件
 //***********************************auth设置**********************************
     'AUTH_CONFIG'            => array(
-            'AUTH_USER'      => 'users'                         //用户信息表
-        ),
+        'AUTH_USER'      => 'users'                         //用户信息表
+    ),
 //***********************************邮件服务器**********************************
     'EMAIL_FROM_NAME'        => '',   // 发件人
     'EMAIL_SMTP'             => '',   // smtp
@@ -83,13 +83,13 @@ return array(
         'KEY_SECRET'         => '', // 阿里云oss key_secret
         'END_POINT'          => '', // 阿里云oss endpoint
         'BUCKET'             => ''  // bucken 名称
-        ),
+    ),
     'NEED_UPLOAD_OSS'        => array( // 需要上传的目录
         '/Upload/avatar',
         '/Upload/cover',
         '/Upload/image/webuploader',
         '/Upload/video',
-        ),
+    ),
     'ALIPAY_CONFIG'          => array(
         'partner'            => '', // partner 从支付宝商户版个人中心获取
         'seller_email'       => '', // email 从支付宝商户版个人中心获取
@@ -103,12 +103,12 @@ return array(
         'show_url'           => 'http://baijunyao.com/User/Order/index', // 商品展示网址,收银台页面上,商品展示的超链接。 (扫码支付专用)
         'private_key_path'   => '', //移动端生成的私有key文件存放于服务器的 绝对路径 如果为MD5加密方式；此项可为空 (移动支付专用)
         'public_key_path'    => '', //移动端生成的公共key文件存放于服务器的 绝对路径 如果为MD5加密方式；此项可为空 (移动支付专用)
-        ),
+    ),
     'WEIXINPAY_CONFIG'       => array(
         'APPID'              => '', // 微信支付APPID
         'MCHID'              => '', // 微信支付MCHID 商户收款账号
         'KEY'                => '', // 微信支付KEY
         'APPSECRET'          => '',  //公众帐号secert
         'NOTIFY_URL'         => 'http://baijunyao.com/Api/WeixPay/notify/order_number/', // 接收支付状态的连接
-        ),
+    ),
 );
