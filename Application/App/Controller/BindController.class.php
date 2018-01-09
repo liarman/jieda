@@ -42,6 +42,7 @@ class BindController extends WapController{
 
 					}
 				}
+
 			}else {
 				$data['status'] = 3;
                 $data['message'] = "绑定信息错误";
@@ -49,6 +50,7 @@ class BindController extends WapController{
 			}
            
         }else {
+
             $wecha_id=$this->wecha_id;
             $this->assign('wecha_id',$wecha_id);
             $this->display();
@@ -129,8 +131,10 @@ class BindController extends WapController{
 	}
 	public  function myInfo(){
 	$d['wecha_id']=I("get.wecha_id");
+	$wecha_id=$d['wecha_id'];
 	if($d) {
 		$customer = M('Customer')->where($d)->find();
+		$this->assign("wecha_id",$wecha_id);
 		$this->assign("customer",$customer);
 		$this->display('myInfo');
 	}
@@ -162,6 +166,8 @@ class BindController extends WapController{
 		$this->ajaxReturn($data,'JSON');
 	}
 	public  function mySend(){
+		$wecha_id=I("get.wecha_id",'');
+		$this->assign("wecha_id",$wecha_id);
 		$this->display('mySend');
 	}
 	public  function driveRoute(){
