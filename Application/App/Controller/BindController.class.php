@@ -269,4 +269,26 @@ class BindController extends WapController{
 		}
 		$this->ajaxReturn($message,'JSON');
 	}
+
+	public function  myInfoDelete(){
+		$id=I("post.wecha_id");
+		if($id){
+			$data=D('Customer')->where(array('wecha_id'=>$id))->find();
+			$map=array(
+				'id'=>$data['id']
+			);
+			$result=D('Customer')->deleteData($map);
+			if($result){
+				$message['status']=1;
+				$message['message']='解除绑定成功！';
+			}else{
+				$message['status']=0;
+				$message['message']='解除绑定失败！';
+			}
+		}else{
+			$message['status']=0;
+			$message['message']='解除绑定失败！';
+		}
+	$this->ajaxReturn($message,'JSON');
+	}
 }
