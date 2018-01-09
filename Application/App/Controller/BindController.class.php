@@ -6,9 +6,7 @@ use Common\Controller\WapController;
  */
 class BindController extends WapController{
     public function _initialize() {
-		
-		//parent::_initialize();
-
+		parent::_initialize();
         $this->assign('staticFilePath',str_replace('./','/',StaticFilePath.'Static'));
     }
     public  function bind(){
