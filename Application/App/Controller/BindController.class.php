@@ -153,7 +153,13 @@ class BindController extends WapController{
 		}
 		$rows = 10;
 		$offset = ($pageNo-1)*$rows;
-		$data=D('Order')->where(array('wecha_id'=>$d))->limit($offset.','.$rows)->select();
+		$sql="select * from qfant_order where wecha_id='$d'";
+		$param=array();
+		array_push($param,$offset);
+		array_push($param,$rows);
+		$sql.=" order by id desc limit %d,%d";
+		$data=D('Order')->query($sql,$param);
+		//$data=D('Order')->where(array('wecha_id'=>$d))->limit($offset.','.$rows)->select();
 		foreach ($data as $key=>$basevalue){
 			if($basevalue['status']=='0'){
 				$data[$key]['status']='已提交订单';
