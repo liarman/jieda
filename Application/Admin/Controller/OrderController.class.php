@@ -201,9 +201,10 @@ ORDER BY
         $ids=I('get.id');
         $arr1 = explode("@@",$ids);
         for($index=0;$index<count($arr1);$index++) {
-            $data=D('Order')->where(array('id'=>$arr1[$index]))->find();
-            $datap[$index]=$data;
-
+            if($arr1[$index]) {
+                $data = D('Order')->where(array('id' => $arr1[$index]))->find();
+                $datap[$index] = $data;
+            }
         }
         $this->ajaxReturn($datap,'JSON');
 
