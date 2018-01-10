@@ -364,11 +364,12 @@
 <div id="transListForPrintDiv" style="height:50px;text-align: left;">
     <div style="height:100px;">
         <ul id="transListForPrint" style="">
-            <li style="list-style:none;float:left;font-weight: bold;" id="transTitle">需要装车的运单：  </li>
+            <li style="list-style:none;float:left;font-weight: bold;" id="transTitle">运单：  </li>
         </ul>
     </div>
     <div style="">
         <!--  <a href="#" class="easyui-linkbutton" icon="icon-print" onclick="printTrans();">打印运单</a>-->
+        <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-list-alt"  plain="true"  onclick="printTrans();">打印运单</a>
         <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-truck" plain="true" id="carButton" onclick="ajaxCarList()">装车</a>
         <a href="javascript:void(0)" class="easyui-linkbutton"  plain="true"  iconCls="fa fa-minus-square" onclick="emptyTrans();">清空运单</a>
     </div>
@@ -386,6 +387,7 @@
     var ajaxReceiveUrl="{:U('Admin/Receive/ajaxReceiveList')}";//收货人列表
     var ajaxorderurl="{:U('Admin/Order/ajaxOrderList')}";//列表
     var  ajaxorderurl="{:U('Admin/Order/ajaxOrderList')}";
+    var printUrl ="{:U('Admin/Order/printorderList')}";
 </script>
 </body>
 </html>
