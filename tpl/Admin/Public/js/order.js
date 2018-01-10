@@ -441,7 +441,7 @@ function deleteTransId(inventoryId) {
 }
 function emptyTrans () {
     $("#transListForPrint").empty();
-    $("#transListForPrint").append("<li style='list-style:none;float:left;font-weight: bold;' id='transTitle'>需要打印的运单：  </li>");
+    $("#transListForPrint").append("<li style='list-style:none;float:left;font-weight: bold;' id='transTitle'>运单：  </li>");
 }
 
 function chooseCar (orderid,cardriveid) {
@@ -490,4 +490,33 @@ function addAssembleReset () {
     $("#inventoryListInfoAssemble_Ids").val();
     $("#transListAssembleDate").val();
     $("#transListAssembleNo").val();
+}
+function printTrans(){
+    var waitPrintTrans=$("#transListForPrint").find("li[id!='transTitle']");
+    var waitPrintTranIds="";
+    if (waitPrintTrans.length>0) {
+        waitPrintTrans.each (function (index){
+            waitPrintTranIds+=$(this).attr("id")+"@@";
+        });
+        var durl=printUrl;//打印
+        $.getJSON(durl,{id:waitPrintTranIds},function(datap){
+            console.log(datap);
+            var LODOP=getLodop(document.getElementById('LODOP'),document.getElementById('LODOP_EM'));
+            LODOP.PRINT_INIT("");
+            LODOP.SET_PRINT_STYLE("FontSize",12);
+            var y=150;
+            $.each(datap,function (i,n) {
+                LODOP.ADD_PRINT_TEXT(y,0,100,30,n.shipper);
+                LODOP.ADD_PRINT_TEXT(y,100,100,30,n.goodsname);
+                LODOP.ADD_PRINT_TEXT(y,200,300,30,n.receiveraddress+"  "+n.receivername+"  "+n.receivertel);
+                LODOP.ADD_PRINT_TEXT(y,500,55,30,n.goodscount);
+                y+=34;
+            });
+            LODOP.PREVIEW();
+        });
+    }else {
+        alert("要打印运单列表为空！");
+        return;
+    }
+
 }
