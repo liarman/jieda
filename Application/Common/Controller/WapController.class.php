@@ -23,7 +23,7 @@ class WapController extends BaseController{
 		parent::_initialize();
 
 		//应用唯一标识
-		$this->_appid = "wx1ad9c780960a37bc" ;
+		$this->_appid = "wx3f0fc84227a77e28" ;
 		
 		//应用密钥AppSecret，在微信开放平台提交应用审核通过后获得
 		$this->_secret ="5efb0ea039b5cb7bdbd720d92573bec2";
