@@ -32,7 +32,7 @@ function editOrderSubmit(){
             return $(this).form('validate');
         },
         success:function(data){
-            data=$.parseJSON(data);
+            data= $.parseJSON(data);
             if(data.status==1){
                 $.messager.alert('Info', data.message, 'info');
                 $('#editOrder').dialog('close');
@@ -49,7 +49,9 @@ function editOrderSubmit(){
 function editOrder(){
     var row = $('#OrderGrid').datagrid('getSelected');
     if(row==null){
-        $.messager.alert('Warning',"请选择要编辑的行", 'info');return false;
+        $.messager.alert('Warning',"请选择要编辑的行！", 'info');return false;
+    }if(row.status==2){
+        $.messager.alert('Warning',"该运单已到站，不能编辑！", 'info');return false;
     }
     if (row){
         var  time=  row.createdate;
@@ -57,7 +59,7 @@ function editOrder(){
         $('#editOrder').dialog('open').dialog('setTitle','编辑');
 
         $('#editOrderForm').form('load',row);
-        $('#editStartdate1').datetimebox('setValue', time);
+        $('#editStartdate1').datebox('setValue', time);
         url =editOrderUrl+'/id/'+row.id;
     }
 }
@@ -78,6 +80,8 @@ function destroyOrder(){
     var row = $('#OrderGrid').datagrid('getSelected');
     if(row==null){
         $.messager.alert('Warning',"请选择要删除的行", 'info');return false;
+    }if(row.status==1){
+        $.messager.alert('Warning',"该运单已发车，不能删除！", 'info');return false;
     }
     if (row){
         $.messager.confirm('删除提示','真的要删除?',function(r){
