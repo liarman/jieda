@@ -90,9 +90,10 @@ class CardriveController extends AdminBaseController{
                     }
                     $where['id']=$d['id'];
                     D('Order')->editData($where,$order);
-                    $message['status']=1;
-                    $message['message']='保存成功';
+
                 }
+                $message['status']=1;
+                $message['message']='保存成功';
             }else {
                 $message['status']=0;
                 $message['message']='保存失败';
