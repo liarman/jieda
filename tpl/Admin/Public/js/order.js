@@ -80,8 +80,6 @@ function destroyOrder(){
     var row = $('#OrderGrid').datagrid('getSelected');
     if(row==null){
         $.messager.alert('Warning',"请选择要删除的行", 'info');return false;
-    }if(row.status==1){
-        $.messager.alert('Warning',"该运单已发车，不能删除！", 'info');return false;
     }
     if (row){
         $.messager.confirm('删除提示','真的要删除?',function(r){
