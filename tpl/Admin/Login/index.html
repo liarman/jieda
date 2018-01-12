@@ -30,6 +30,9 @@
 </div>
 <div class="footer">启凡科技 CopyRight 2017 版权所有 </div>
 <script>
+    if(window !=top){
+        top.location.href=location.href;
+    }
     $(".errortd").hide();
     $("#login").click(function () {
         if($("input[name='username']").val()==""){
