@@ -133,7 +133,8 @@ function orderList(){
             {field: 'shippertel', title: '寄件人电话', width: 100},
             {field: 'receivername', title: '收件人姓名', width: 100},
             {field: 'receiveraddress', title: '收件人电话', width: 100},
-            {field: 'receivertel', title: '收件人地址', width: 100}
+            {field: 'receivertel', title: '收件人地址', width: 100},
+            {field: 'endciytname', title: '收货城市', width: 100}
         ]],
         onLoadSuccess:function(data){
            if(data){
@@ -149,8 +150,16 @@ function orderList(){
             iconCls: 'fa fa-file-text-o',
             id:'ButonGetCheck',
             text:'打印',
-            handler: function(){printList();}
-        }]
+            handler: function(){printList();
+            }
+        },
+            {
+                iconCls: 'fa fa-file-text-o',
+                id:'ButonGetCity',
+                text:'收货城市',
+                handler: function(){endCity();
+                }
+            }]
     });
 }
 function printList(){
@@ -179,26 +188,50 @@ function printList(){
                 LODOP.PREVIEW();
             });
         }else {
-            alert("要打印运单列表为空！");
+            $.messager.alert('Warning',"要打印运单列表为空", 'info');return false;
+            //alert("！");
             return;
         }
-
         });
+}
 
-    /*var selRow = $('#orderListGrid').datagrid("getChecked");
-    if(selRow.length==0){
-        alert("请至少选择一行数据!");
-        return false;
-    }
-    var ids=[];
-    for (var i = 0; i < selRow.length; i++) {
-        //获取自定义table 的中的checkbox值
-        var id=selRow[i].OTRECORDID;   //OTRECORDID这个是你要在列表中取的单个id
-        ids.push(id); //然后把单个id循环放到ids的数组中
-    }
-    console.log(ids);*/
+function   endCity(){
+    $('#ButonGetCity').click(function(){
+        var checkedItems = $('#orderListGrid').datagrid('getChecked');
+        var ids = [];
+        $.each(checkedItems, function(index, item){
+            ids.push(item.oid);
+        });
+        ids=ids.join("@@");
+        if (ids.length>0) {
+            $('#EndCityIds').val(ids);
+            $('#endCityDlg').dialog('open').dialog('setTitle', '收货城市');
+        }else{
+            $.messager.alert('Warning',"设置收货城市的表为空", 'info');return false;
 
+        }
+    });
+}
 
+function  EndCitySubmit(){
+    $('#endcityForm').form('submit',{
+        url: editEndCity,
+        onSubmit: function(){
+            return $(this).form('validate');
+        },
+        success:function(data){
+            data=$.parseJSON(data);
+            if(data.status==1){
+                $.messager.alert('Info', data.message, 'info');
+                $('#endCityDlg').dialog('close');
+                $('#orderListGrid').datagrid('reload');
+            }else {
+                $.messager.alert('Warning', data.message, 'info');
+                $('#endCityDlg').dialog('close');
+                $('#orderListGrid').datagrid('reload');
+            }
+        }
+    });
 }
 function addarrive(row){
     $('#addarrive').dialog('open').dialog('setTitle','添加');
