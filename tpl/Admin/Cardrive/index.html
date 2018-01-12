@@ -100,6 +100,34 @@
 <div id="arriveDlg" class="easyui-dialog" title="到站列表" style="width:600px;padding:10px 20px;height: 400px" closed="true" modal="true">
     <div id="arriveGrid" style=""></div>
 </div>
+<div id="endCityDlg" class="easyui-dialog" title="收货城市" style="width:600px;padding:10px 20px;height: 240px" closed="true" modal="true">
+    <form id="endcityForm" method="post">
+            <input id="EndCityIds" name="ids" type="hidden"/>
+        <tr>
+            <td>收货城市:</td>
+            <td><input  class="easyui-combobox" name="endcity" panelHeight="150px" style="width:300px" data-options=" valueField:'id', textField:'name', url:'{:U('Admin/Route/ajaxRoute')}'"></td>
+        </tr>
+        <br/>
+        <tr>
+            <td></td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <td> <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok"  style="width:90px"  onclick="EndCitySubmit()">保存</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"  style="width:90px" onclick="javascript:$('#endCityDlg').dialog('close')" >取消</a></td>
+        </tr>
+       <!-- <tr>
+                <td>收货城市</td>
+                <td>
+                    <input  class="easyui-combobox" name="endcity" panelHeight="150px" style="width:300px" data-options=" valueField:'id', textField:'name', url:'{:U('Admin/Route/ajaxRoute')}'">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok"  style="width:90px"  onclick="EndCitySubmit()">保存</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel"  style="width:90px" onclick="javascript:$('#endCityDlg').dialog('close')" >取消</a>
+                </td>
+            </tr>-->
+       </table>
+    </form>
+</div>
 <div id="orderListDlg" class="easyui-dialog" title="运单列表" style="width:950px;padding:10px 20px;height: 400px" closed="true" modal="true">
     <div id="orderListGrid" style="width:930px;" rownumbers="true"></div>
 </div>
@@ -139,6 +167,7 @@
     var addarriveUrl="{:U('Admin/Cardrive/addarrive')}";
     var orderListUrl="{:U('Admin/Order/orderList')}";
      var printUrl ="{:U('Admin/Order/printorderList')}";
+    var editEndCity = "{:U('Admin/Order/editEndCity')}";
 </script>
 </body>
 </html>
