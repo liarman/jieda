@@ -180,16 +180,19 @@ class OrderController extends AdminBaseController{
 	o.receivername,
 	o.receiveraddress,
 	o.receivertel,
-	cd.number AS number
-FROM
-	qfant_order AS o,
-	qfant_cardrive AS cd,
+	cd.number AS number,
+  r.name as endciytname
+from qfant_order as o
+left join qfant_route as r
+on o.endcity=r.id
+left join
+	qfant_cardrive AS cd
+ on o.cardriveid = cd.id
+left join
 qfant_driverorder as dor
+on o.id=dor.orderid
 WHERE
-	o.cardriveid = cd.id
-and o.id=dor.orderid
-AND o. STATUS = 1
-AND dor.cardriveid = '$cardriveid'
+ dor.cardriveid = '$cardriveid'
 ORDER BY
 	dor.id DESC";
        /* $sql ="SELECT o.id AS oid,	o.orderno,	o.shipper,	o.shippertel,	o.receivername,	o.receiveraddress,	o.receivertel,	cd.number AS number FROM	qfant_order AS o,	qfant_cardrive AS cd WHERE	o.cardriveid = cd.id AND o. STATUS = 1 AND cd.id = '$cardriveid'  order by o.id desc";*/
@@ -207,6 +210,36 @@ ORDER BY
             }
         }
         $this->ajaxReturn($datap,'JSON');
+
+    }
+
+    public  function editEndCity(){
+        $ids=I('post.ids');
+        $endCity=I('post.endcity');
+        $data['endcity']=$endCity;
+        $data['status']="1";
+        $arr1 = explode("@@",$ids);
+        if($ids){
+            for($index=0;$index<count($arr1);$index++) {
+                if($arr1[$index]) {
+                    $where['id']=$arr1[$index];
+                    $result=D('Order')->editData($where,$data);
+                    if($result){
+                        $message['status']=1;
+                        $message['message']='保存成功';
+                    }else {
+                        $message['status']=0;
+                        $message['message']='保存失败';
+                    }
+
+                }
+            }
+        }else{
+            $message['status']=0;
+            $message['message']='保存失败';
+        }
+
+        $this->ajaxReturn($message,'JSON');
 
     }
 }
