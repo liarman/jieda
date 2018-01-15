@@ -522,3 +522,34 @@ function printTrans(){
     }
 
 }
+$(function(){
+    //添加后聚焦后显示下拉框内容
+    $('#goodsunitCombox').combobox('textbox').bind('focus',function(){
+        $('#goodsunitCombox').combobox('showPanel');
+    });
+
+    $('#paytypeCombox').combobox('textbox').bind('focus',function(){
+        $('#paytypeCombox').combobox('showPanel');
+    });
+
+    $('#createdateCombox').datebox('textbox').bind('focus',function(){
+        $('#createdateCombox').datebox('showPanel');
+    });
+
+/*编辑页面下拉框聚焦后直接显示面板*/
+    $('#goodsunitComb').combobox('textbox').bind('focus',function(){
+        $('#goodsunitComb').combobox('showPanel');
+    });
+
+    $('#paytypeComb').combobox('textbox').bind('focus',function(){
+        $('#paytypeComb').combobox('showPanel');
+    });
+
+    $('#editStartdate1').datebox('textbox').bind('focus',function(){
+        $('#editStartdate1').datebox('showPanel');
+    });
+
+
+
+
+});
