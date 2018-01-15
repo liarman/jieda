@@ -219,7 +219,6 @@ ORDER BY
         $data['endcity']=$endCity;
         $data['status']="1";
         $arr1 = explode("@@",$ids);
-        if($ids){
             for($index=0;$index<count($arr1);$index++) {
                 if($arr1[$index]) {
                     $where['id']=$arr1[$index];
@@ -234,11 +233,6 @@ ORDER BY
 
                 }
             }
-        }else{
-            $message['status']=0;
-            $message['message']='保存失败';
-        }
-
         $this->ajaxReturn($message,'JSON');
 
     }
