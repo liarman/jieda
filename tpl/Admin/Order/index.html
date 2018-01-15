@@ -111,7 +111,7 @@
                 <td align="right">重量:<input name="goodsweight" class="easyui-numberbox"style="width: 300px"   data-options="delay:1000" /></td>
 
                 <td align="right">单位:
-                    <select  panelMaxHeight="100px" name="goodsunit" class="easyui-combobox" style="width:300px" data-options="delay:1000,multiple:false">
+                    <select  panelMaxHeight="100px" name="goodsunit" id="goodsunitCombox" editable="false" class="easyui-combobox" style="width:300px" data-options="delay:1000,multiple:false">
                         <option value="1">千克</option>
                         <option value="2">箱</option>
                     </select>
@@ -132,14 +132,14 @@
             </tr>
             <tr>
                 <td align="right">付款方式:
-                    <select  panelMaxHeight="100px" name="paytype" class="easyui-combobox" style="width:300px" data-options="delay:1000,required:true,multiple:false">
+                    <select  panelMaxHeight="100px" name="paytype" id="paytypeCombox"  editable="false"  class="easyui-combobox" style="width:300px" data-options="delay:1000,required:true,multiple:false">
                         <option value="1">欠付</option>
                         <option value="2">货到付款</option>
                         <option value="3">现付</option>
                     </select>
 
                 </td>
-                <td align="right">托运时间: <input name="createdate" class="easyui-datebox" style="width: 300px" data-options="delay:1000" /></td>
+                <td align="right">托运时间: <input name="createdate" id="createdateCombox"  editable="false"  class="easyui-datebox" style="width: 300px" data-options="delay:1000" /></td>
             </tr>
             <tr>
                 <td align="right">备注:
@@ -185,7 +185,7 @@
                 <td align="right">重量:<input name="goodsweight" class="easyui-textbox"style="width: 300px"   data-options="delay:1000 " /></td>
 
                 <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单位:
-                    <select  panelMaxHeight="100px" name="goodsunit" class="easyui-combobox" style="width:300px" data-options="delay:1000,required:true,multiple:false">
+                    <select  panelMaxHeight="100px" name="goodsunit" id="goodsunitComb" class="easyui-combobox"  editable="false"  style="width:300px" data-options="delay:1000,required:true,multiple:false">
                         <option value="1">千克</option>
                         <option value="2">箱</option>
                     </select>
@@ -207,20 +207,20 @@
             </tr>
             <tr>
                 <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;付款方式:
-                    <select  panelMaxHeight="100px" name="paytype" class="easyui-combobox" style="width:300px" data-options="delay:1000,multiple:false">
+                    <select  panelMaxHeight="100px" id="paytypeComb"  name="paytype" class="easyui-combobox"   editable="false"  style="width:300px" data-options="delay:1000,multiple:false">
                         <option value="1">欠付</option>
                         <option value="2">货到付款</option>
                         <option value="3">现付</option>
                     </select>
                 </td>
 
-                <td align="right">托运时间: <input id="editStartdate1" name="createdate" class="easyui-datebox" style="width: 300px" data-options="delay:1000" /></td>
+                <td align="right">托运时间: <input id="editStartdate1" name="createdate"  editable="false"  class="easyui-datebox" style="width: 300px" data-options="delay:1000" /></td>
 
             </tr>
 
             <tr>
 
-                <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;收货城市:<input  class="easyui-combobox" name="endcity" panelHeight="150px" style="width:300px" data-options=" valueField:'id', textField:'name', url:'{:U('Admin/Route/ajaxRoute')}'"></td>
+                <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;收货城市:<input  editable="false"   class="easyui-combobox" name="endcity" panelHeight="150px" style="width:300px" data-options=" valueField:'id', textField:'name', url:'{:U('Admin/Route/ajaxRoute')}'"></td>
 
             </tr>
             <tr>
