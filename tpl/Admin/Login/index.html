@@ -65,12 +65,12 @@
                     password:password
                 }
                 $.post("{:U('Admin/Login/index')}", Data, function(message) {
-                    if(message.status==0){
+                    if(message.status==1){
+                        location.href="{:U('Admin/Index/index')}";
+                    }else{
                         $(".errorword").empty().html("账号或者密码输入错误");
                         $(".errortd").show();
                         return false;
-                    }else{
-                        location.href="{:U('Admin/Index/index')}";
                     }
                 });
             }else{

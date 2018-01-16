@@ -1545,4 +1545,33 @@ function http($url, $params, $method = 'GET', $header = array(), $multi = false)
     if($error) throw new Exception('请求发生错误：' . $error);
     return  $data;
 }
+//根据ip地址获取地址信息
+function getAddressFromIp($ip){
+    $urlTaobao = 'http://ip.taobao.com/service/getIpInfo.php?ip='.$ip;
+    $urlSina = 'http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json&ip='.$ip;
+    $json = file_get_contents($urlTaobao);
+    $jsonDecode = json_decode($json);
+    if($jsonDecode->code==0){//如果取不到就去取新浪的
+        $data['country'] = $jsonDecode->data->country;
+        $data['province'] = $jsonDecode->data->region;
+        $data['city'] = $jsonDecode->data->city;
+        $data['isp'] = $jsonDecode->data->isp;
+        return $data;
+    }else{
+        $json = file_get_contents($urlSina);
+        $jsonDecode = json_decode($json);
+        $data['country'] = $jsonDecode->country;
+        $data['province'] = $jsonDecode->province;
+        $data['city'] = $jsonDecode->city;
+        $data['isp'] = $jsonDecode->isp;
+        $data['district'] = $jsonDecode->district;
+        return $data;
+    }
+}
+
+//根据ip地质获取城市名
+function getCityFromIp($ip){
+    $data = getAddressFromIp($ip);
+    return $data['city'];
+}
 
