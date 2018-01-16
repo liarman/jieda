@@ -2,6 +2,7 @@ var url;
 function addOrder(){
     $('#addOrder').dialog('open').dialog('setTitle','添加');
     $('#addOrderForm').form('clear');
+    $('#goodsunitCombox').textbox('setValue',"千克");
     url=addOrderUrl;
 }
 
@@ -60,6 +61,7 @@ function editOrder(){
 
         $('#editOrderForm').form('load',row);
         $('#editStartdate1').datebox('setValue', time);
+        $('#goodsunitComb').textbox('setValue',"千克");
         url =editOrderUrl+'/id/'+row.id;
     }
 }
@@ -322,7 +324,9 @@ function lookOrder(){
     if (row){
         $('#lookOrder').dialog('open').dialog('setTitle','查看');
         $('#lookOrderForm').form('load',row);
+        $('#goodsunitCombEdit').textbox('setValue',"千克");
         $('#lookcreatedate').datetimebox('setValue', time);
+
         url =lookUrl+'/id/'+row.id;
     }
 }
@@ -354,6 +358,10 @@ function print1(id){
                 goodsunit="千克";
             }else if (data[0].goodsunit=="2") {
                 goodsunit="箱";
+            }else if (data[0].goodsunit=="千克") {
+                goodsunit="千克";
+            }else if (data[0].goodsunit=="0") {
+                goodsunit="千克";
             }else {
                 goodsunit="";
             }
@@ -522,3 +530,23 @@ function printTrans(){
     }
 
 }
+
+$(function(){
+    //添加后聚焦后显示下拉框内容
+   $('#paytypeCombox').combobox('textbox').bind('focus',function(){
+        $('#paytypeCombox').combobox('showPanel');
+    });
+
+    $('#createdateCombox').datebox('textbox').bind('focus',function(){
+        $('#createdateCombox').datebox('showPanel');
+    });
+
+
+    $('#paytypeComb').combobox('textbox').bind('focus',function(){
+        $('#paytypeComb').combobox('showPanel');
+    });
+
+    $('#editStartdate1').datebox('textbox').bind('focus',function(){
+        $('#editStartdate1').datebox('showPanel');
+    });
+});
