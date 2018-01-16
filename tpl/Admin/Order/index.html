@@ -75,7 +75,7 @@
     <a href="javascript:void(0)" class="easyui-linkbutton" onclick="doSearch()" iconCls="icon-search">搜索</a>
 </div>
 <!--添加-->
-<div id="addOrder" class="easyui-dialog" title="添加" style="width:1000px;height:500px;padding:10px 20px;" closed="true" modal="true">
+<div id="addOrder" class="easyui-dialog" title="添加" style="width:1000px;height:500px;padding:10px 20px;" closed="true" modal="true"  onkeydown="">
     <form id="addOrderForm" method="post">
         <input name="shipperid" id="addSid"  type="hidden"  />
         <table>
@@ -111,10 +111,11 @@
                 <td align="right">重量:<input name="goodsweight" class="easyui-numberbox"style="width: 300px"   data-options="delay:1000" /></td>
 
                 <td align="right">单位:
-                    <select  panelMaxHeight="100px" name="goodsunit" id="goodsunitCombox" editable="false" class="easyui-combobox" style="width:300px" data-options="delay:1000,multiple:false">
-                        <option value="1">千克</option>
+                    <input name="goodsunit" type="text"  id="goodsunitCombox" disabled="disabled" class="easyui-textbox " style="width: 300px" value="千克"  data-options="delay:1000" />
+                  <!--  <select  panelMaxHeight="100px"  name="goodsunit"  id="goodsunitCombox" editable="false" class="easyui-combobox" style="width:300px" data-options="delay:1000,multiple:false">
+                        <option  value="1">千克</option>
                         <option value="2">箱</option>
-                    </select>
+                    </select>-->
                 </td>
 
             </tr>
@@ -131,13 +132,12 @@
 
             </tr>
             <tr>
-                <td align="right">付款方式:
+               <td align="right">付款方式:
                     <select  panelMaxHeight="100px" name="paytype" id="paytypeCombox"  editable="false"  class="easyui-combobox" style="width:300px" data-options="delay:1000,required:true,multiple:false">
-                        <option value="1">欠付</option>
-                        <option value="2">货到付款</option>
-                        <option value="3">现付</option>
-                    </select>
-
+                            <option value="1">欠付</option>
+                           <option value="2">货到付款</option>
+                           <option value="3">现付</option>
+                     </select>
                 </td>
                 <td align="right">托运时间: <input name="createdate" id="createdateCombox"  editable="false"  class="easyui-datebox" style="width: 300px" data-options="delay:1000" /></td>
             </tr>
@@ -185,10 +185,11 @@
                 <td align="right">重量:<input name="goodsweight" class="easyui-textbox"style="width: 300px"   data-options="delay:1000 " /></td>
 
                 <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单位:
-                    <select  panelMaxHeight="100px" name="goodsunit" id="goodsunitComb" class="easyui-combobox"  editable="false"  style="width:300px" data-options="delay:1000,required:true,multiple:false">
+                    <input name="goodsunit" type="text" disabled="disabled" id="goodsunitComb"  class="easyui-textbox " style="width: 300px" value="千克"  data-options="delay:1000" />
+                  <!--  <select  panelMaxHeight="100px" name="goodsunit" id="goodsunitComb" class="easyui-combobox"  editable="false"  style="width:300px" data-options="delay:1000,required:true,multiple:false">
                         <option value="1">千克</option>
                         <option value="2">箱</option>
-                    </select>
+                    </select>-->
 
                 </td>
 
@@ -218,11 +219,11 @@
 
             </tr>
 
-            <tr>
+            <!--<tr>
 
                 <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;收货城市:<input  editable="false"   class="easyui-combobox" name="endcity" panelHeight="150px" style="width:300px" data-options=" valueField:'id', textField:'name', url:'{:U('Admin/Route/ajaxRoute')}'"></td>
 
-            </tr>
+            </tr>-->
             <tr>
                 <td align="right">备注:
                     <input class="easyui-textbox" name="col" data-options="multiline:true" style="width:300px;height:60px;align:center"/></td>
@@ -269,10 +270,11 @@
                 <td align="right">重量:<input name="goodsweight" class="easyui-textbox"style="width: 300px"   data-options="delay:1000 " /></td>
 
                 <td align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;单位:
-                    <select  panelMaxHeight="100px" name="goodsunit" class="easyui-combobox" style="width:300px" data-options="delay:1000,required:true,multiple:false">
+                    <input name="goodsunit" type="text"  id="goodsunitCombEdit"  class="easyui-textbox " style="width: 300px" value="千克"  data-options="delay:1000" />
+                   <!-- <select  panelMaxHeight="100px" name="goodsunit" class="easyui-combobox" style="width:300px" data-options="delay:1000,required:true,multiple:false">
                         <option value="1">千克</option>
                         <option value="2">箱</option>
-                    </select>
+                    </select>-->
 
                 </td>
 
