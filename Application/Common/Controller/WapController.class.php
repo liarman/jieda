@@ -27,7 +27,7 @@ class WapController extends BaseController{
 		
 		//应用密钥AppSecret，在微信开放平台提交应用审核通过后获得
 		$this->_secret ="wx0bfc0c6a41517f06";
-		$this->token="gh_04bf4f0d8ab1";
+		$this->token="adoemv1422964222";//gh_04bf4f0d8ab1
 		$this->siteUrl=C('GLOBAL_DOMAIN_URL');
 		$session_openid_name='token_openid_'.$this->token;
 		$session_fakeopenid_name='token_fakeopenid_'.$this->token;
