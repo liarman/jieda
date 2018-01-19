@@ -160,6 +160,22 @@ class CardriveController extends AdminBaseController{
         $map=array(
             'id'=>$id
         );
+        $map1=array(
+            'cardriveid'=>$id
+        );
+        //删除发车列表，如果该车已有的订单，设置为已提交订单的状态
+        $dataOrder=D('Driverorder')->where(array('cardriveid' => $id))->select();
+        if($dataOrder[0]){
+            $data1['status']=0;
+            for($index=0;$index<count($dataOrder);$index++) {
+                if($dataOrder[$index]&&$dataOrder[$index]['status']==1) {
+                    $where['id']=$dataOrder[$index]['orderid'];
+                    $result2=D('Order')->editData($where,$data1);
+                }
+            }
+            $result1=D('Driverorder')->deleteData($map1);//删除发车表的记录同时删除装车与订单关联的表
+        }
+
         $result=D('Cardrive')->deleteData($map);
         if($result){
             $message['status']=1;
