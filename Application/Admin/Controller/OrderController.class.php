@@ -134,6 +134,8 @@ class OrderController extends AdminBaseController{
         $map=array(
             'id'=>$id
         );
+        $map1=array('orderid'=>$id);
+        $result1=D('Driverorder')->deleteData($map1);//删除装车与订单关联的表
         $result=D('Order')->deleteData($map);
         if($result){
             $message['status']=1;
@@ -153,11 +155,16 @@ class OrderController extends AdminBaseController{
         $result="";
         for($index=count($arr1);$index>=0;$index--) {
             if($arr1[$index]){
-            $where['id']=$arr1[$index];
-            $data1['orderid']=$arr1[$index];
-            $data1['cardriveid']=I('get.id');//发车id
-            D('Order')->editData($where,$data);
-            $result=D('Driverorder')->addData($data1);
+                $where['id']=$arr1[$index];
+                $data1['orderid']=$arr1[$index];
+                $map1=array(
+                    'orderid'=> $data1['orderid']
+                );
+                    $result1=D('Driverorder')->deleteData($map1);//删除装车与订单关联的表
+                    $data1['cardriveid']=I('get.id');//发车id
+                    D('Order')->editData($where,$data);
+                    $result=D('Driverorder')->addData($data1);
+
             }
         }
         if($result){
