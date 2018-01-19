@@ -168,7 +168,7 @@ class CardriveController extends AdminBaseController{
         if($dataOrder[0]){
             $data1['status']=0;
             for($index=0;$index<count($dataOrder);$index++) {
-                if($dataOrder[$index]&&$dataOrder[$index]['status']==1) {
+                if($dataOrder[$index]) {
                     $where['id']=$dataOrder[$index]['orderid'];
                     $result2=D('Order')->editData($where,$data1);
                 }
