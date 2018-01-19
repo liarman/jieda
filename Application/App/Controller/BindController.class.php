@@ -48,16 +48,16 @@ class BindController extends WapController{
 			}
            
         }else {
-            $wecha_id=$this->wecha_id;
-			$res=D("Customer")->where(array('wecha_id'=>$wecha_id))->find();
-			if($res){//已注册跳到运单列表
-				$this->redirect('App/Bind/myOrder', array('wecha_id' =>$wecha_id));
+           $wecha_id=$this->wecha_id;
+			/*$res=D("Customer")->where(array('wecha_id'=>$wecha_id))->find();
+           if($res){*///已注册跳到运单列表
+			/*	$this->redirect('App/Bind/myOrder', array('wecha_id' =>$wecha_id));*/
 			/*	$this->assign('wecha_id',$wecha_id);
 				$this->display();*/
-			}else {//未注册跳到注册页面
+			/*}else {*///未注册跳到注册页面
 				$this->assign('wecha_id', $wecha_id);
 				$this->display();
-			}
+		/*	}*/
         }
     }
 
