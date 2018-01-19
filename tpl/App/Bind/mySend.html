@@ -98,6 +98,7 @@
          $.post("{:U('App/Bind/sendAdd')}", $('#sendFrom').serialize(), function(data){
              if(data.status==1){
                  alert( data.message);
+                 location.href= "{:U('App/Bind/myOrder',array('wecha_id'=>$wecha_id))}";
              }else {
                  alert( data.message);
              }
