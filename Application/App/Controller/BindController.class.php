@@ -213,7 +213,7 @@ class BindController extends WapController{
 			$data=D('Order')->field('status')->where(array('id'=>$id))->find();
 			if($data['status']=='1'){
 				$message['status']=2;
-				$message['message']='该订单已装车，不能删除！';
+				$message['message']='该订单已装车，请联系快递公司进行删除！';
 			}else{
 				$map=array(
 					'id'=>$id
