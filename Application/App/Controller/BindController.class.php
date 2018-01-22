@@ -121,8 +121,6 @@ class BindController extends WapController{
 	public function myInfoEdit(){
 		if(IS_POST){
 			$data=I('post.');
-			$data['cardriveid']="";
-			$data['status']="0";
 			$where['id']=$data['id'];
 			$result=D('Customer')->editData($where,$data);
 			if($result){
