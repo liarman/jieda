@@ -14,13 +14,13 @@
 
 <body ontouchstart>
 <header class="ui-header ui-header-positive ui-border-b">
-    <i class="ui-icon-return" onclick="history.back()"></i><h1>订单路线 </h1><button class="ui-btn">回首页</button>
+    <i class="ui-icon-return" onclick="history.back()"></i><h1>订单路线 </h1><button class="ui-btn"></button>
 </header>
 <footer class="ui-footer ui-footer-btn">
     <ul class="ui-tiled ui-border-t">
-        <li data-href="{:U('App/Bind/myOrder',array('wecha_id'=>$wecha_id))}" class="ui-border-r"><div>我的订单</div></li>
+    <!--    <li data-href="{:U('App/Bind/myOrder',array('wecha_id'=>$wecha_id))}" class="ui-border-r"><div>我的订单</div></li>
         <li data-href="{:U('App/Bind/mySend',array('wecha_id'=>$wecha_id))}" class="ui-border-r"><div>我要发件</div></li>
-        <li data-href="{:U('App/Bind/myInfo',array('wecha_id'=>$wecha_id))}"><div>个人中心</div></li>
+        <li data-href="{:U('App/Bind/myInfo',array('wecha_id'=>$wecha_id))}"><div>个人中心</div></li>-->
     </ul>
 </footer>
 <section class="ui-container">
@@ -47,7 +47,7 @@
 </section>
 
 <script>
-    $('.ui-list li,.ui-tiled li').click(function(){
+  /*  $('.ui-list li,.ui-tiled li').click(function(){
         if($(this).data('href')){
             location.href= $(this).data('href');
         }
@@ -55,7 +55,7 @@
     $('.ui-header .ui-btn').click(function(){
         location.href= "{:U('App/Bind/myInfo',array('wecha_id'=>$wecha_id))}";
     });
-
+*/
 </script>
 </body>
 </html>

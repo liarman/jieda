@@ -4,62 +4,62 @@ use Common\Controller\WapController;
 /**
  * 认证控制器
  */
-class BindController extends WapController{
-    public function _initialize() {
-		parent::_initialize();
-        $this->assign('staticFilePath',str_replace('./','/',StaticFilePath.'Static'));
-    }
-    public  function bind(){
-        $bindingModel = D("Binding");
-        $bindkeyModel = D("Bindkey");
-		
-        if(IS_POST){
-            $key=I('post.key');
-            $wecha_id=I('post.wecha_id');
-            $bindk=$bindkeyModel->where(array('key'=>$key,'status'=>1))->find();
-			if($wecha_id){
-				 if(empty($bindk)){
-                $data['status'] = 2;
-                $data['message'] = "您输入的绑定秘钥不存在";
-                $this->ajaxReturn($data,'JSON');
-				}else {
-					$binduser=$bindingModel->where(array('wecha_id'=> $wecha_id))->find();
-					if($binduser){
-						$data['status'] = 5;
-						$data['message'] = "您已经绑定，不需要再次绑定";
-						$this->ajaxReturn($data,'JSON');
-					}else {
-						$bindkeyModel->where(array('key'=>$key))->setField(array('status'=>0));
-						$user['wecha_id']=$wecha_id;
-						$user['createtime']=time();
-						$user['bkey_id']=$bindk['id'];
-						$bindingModel->add($user);
-						$data['status'] = 1;
-						$data['message'] = "绑定成功";
-						$this->ajaxReturn($data,'JSON');
+class BindController extends  WapController{
+	 public function _initialize() {
+         parent::_initialize();
+         $this->assign('staticFilePath',str_replace('./','/',StaticFilePath.'Static'));
+     }
+	public  function bind(){
+		   $bindingModel = D("Binding");
+           $bindkeyModel = D("Bindkey");
 
-					}
-				}
+           if(IS_POST){
+               $key=I('post.key');
+               $wecha_id=I('post.wecha_id');
+               $bindk=$bindkeyModel->where(array('key'=>$key,'status'=>1))->find();
+               if($wecha_id){
+                    if(empty($bindk)){
+                   $data['status'] = 2;
+                   $data['message'] = "您输入的绑定秘钥不存在";
+                   $this->ajaxReturn($data,'JSON');
+                   }else {
+                       $binduser=$bindingModel->where(array('wecha_id'=> $wecha_id))->find();
+                       if($binduser){
+                           $data['status'] = 5;
+                           $data['message'] = "您已经绑定，不需要再次绑定";
+                           $this->ajaxReturn($data,'JSON');
+                       }else {
+                           $bindkeyModel->where(array('key'=>$key))->setField(array('status'=>0));
+                           $user['wecha_id']=$wecha_id;
+                           $user['createtime']=time();
+                           $user['bkey_id']=$bindk['id'];
+                           $bindingModel->add($user);
+                           $data['status'] = 1;
+                           $data['message'] = "绑定成功";
+                           $this->ajaxReturn($data,'JSON');
 
-			}else {
-				$data['status'] = 3;
-                $data['message'] = "绑定信息错误";
-                $this->ajaxReturn($data,'JSON');
-			}
-           
-        }else {
-           $wecha_id=$this->wecha_id;
-			$res=D("Customer")->where(array('wecha_id'=>$wecha_id))->find();
-           if($res){//已注册跳到运单列表
-				$this->redirect('App/Bind/myOrder', array('wecha_id' =>$wecha_id));
-				$this->assign('wecha_id',$wecha_id);
-				$this->display();
-			}else {//未注册跳到注册页面
-				$this->assign('wecha_id', $wecha_id);
-				$this->display();
-			}
-        }
-    }
+                       }
+                   }
+
+               }else {
+                   $data['status'] = 3;
+                   $data['message'] = "绑定信息错误";
+                   $this->ajaxReturn($data,'JSON');
+               }
+
+           }else {
+		// $wecha_id=$this->wecha_id;
+		//	$res=D("Customer")->where(array('wecha_id'=>$wecha_id))->find();
+		//    if($res){//已注册跳到运单列表
+		//		$this->redirect('App/Bind/myOrder', array('wecha_id' =>$wecha_id));
+		//		$this->assign('wecha_id',$wecha_id);
+		//		$this->display();
+		//	}else {//未注册跳到注册页面
+		//	$this->assign('wecha_id', $wecha_id);
+		$this->display();
+		//	}
+		    }
+	}
 
 	public function register(){
 		if(IS_POST) {
@@ -98,22 +98,22 @@ class BindController extends WapController{
 			unset($data['id']);
 			$res=D("Order")->add($data);//写入订单表
 			D("Receive")->add($data);//写入收货人表
-		//	$res= M('Order')->field('id')->where($data)->find();
+			//	$res= M('Order')->field('id')->where($data)->find();
 			$id=$res;
 			$where['id']=$res;
 			$data['orderno']=$this->OrdernoMethod($id,"J");
 			$result=D('Order')->editData($where,$data);
-				if ($result) {
-					$data['status'] = 1;
-					$data['message'] = '成功';
-				} else {
-					$data['status'] = 0;
-					$data['message'] = '失败';
-				}
-			}else{
+			if ($result) {
+				$data['status'] = 1;
+				$data['message'] = '成功';
+			} else {
 				$data['status'] = 0;
 				$data['message'] = '失败';
 			}
+		}else{
+			$data['status'] = 0;
+			$data['message'] = '失败';
+		}
 		$this->ajaxReturn($data,'JSON');
 
 	}
@@ -134,15 +134,15 @@ class BindController extends WapController{
 		$this->ajaxReturn($message,'JSON');
 	}
 	public  function myInfo(){
-	$d['wecha_id']=I("get.wecha_id");
-	$wecha_id=$d['wecha_id'];
-	if($d) {
-		$customer = M('Customer')->where($d)->find();
-		$this->assign("wecha_id",$wecha_id);
-		$this->assign("customer",$customer);
-		$this->display('myInfo');
+		$d['wecha_id']=I("get.wecha_id");
+		$wecha_id=$d['wecha_id'];
+		if($d) {
+			$customer = M('Customer')->where($d)->find();
+			$this->assign("wecha_id",$wecha_id);
+			$this->assign("customer",$customer);
+			$this->display('myInfo');
+		}
 	}
-}
 
 	public function myOrder(){
 		$wecha_id=I("get.wecha_id",'');
@@ -247,8 +247,8 @@ class BindController extends WapController{
 				$message['message']='该订单已到站，不可修改';
 				$this->ajaxReturn($message,'JSON');
 			}else{*/
-				$this->assign("order",$order);
-				$this->display('EditMyOrder');
+			$this->assign("order",$order);
+			$this->display('EditMyOrder');
 			/*}*/
 
 		}
@@ -301,6 +301,53 @@ class BindController extends WapController{
 			$message['status']=0;
 			$message['message']='解除绑定失败！';
 		}
-	$this->ajaxReturn($message,'JSON');
+		$this->ajaxReturn($message,'JSON');
+	}
+
+	public  function  mySelectOrder(){
+		$pageNo = I("get.pageNo");
+		if($pageNo==0){
+			$pageNo =1;
+		}
+		$rows = 10;
+		$offset = ($pageNo-1)*$rows;
+		$receivername=I("get.receivername");
+		$receivertel=I("get.receivertel");
+		$shipper=I("get.shipper");
+		$shippertel=I("get.shippertel");
+		$sql="SELECT	o.* ,c.driver as driver ,r.name as endcityname ,cd.number as number,cd.startdate as startdate FROM	qfant_order o left join qfant_cardrive cd on o.cardriveid=cd.id	LEFT JOIN qfant_route r on r.id=o.endcity LEFT JOIN qfant_car  c on c.id=cd.carid where 1=1";
+		$param=array();
+		if(!empty($receivername)){
+			$sql.=" and o.receivername like '%s'";
+			array_push($param,'%'.$receivername.'%');
+		}
+		if(!empty($receivertel)){
+			$sql.=" and o.receivertel like '%s'";
+			array_push($param,'%'.$receivertel.'%');
+		}
+		if(!empty($shipper)){
+			$sql.=" and o.shipper like '%s'";
+			array_push($param,'%'.$shipper.'%');
+		}
+		if(!empty($shippertel)){
+			$sql.=" and o.shippertel like '%s'";
+			array_push($param,'%'.$shippertel.'%');
+		}
+		$sql.=" order by o.createdate desc,o.id desc  limit %d,%d ";
+		array_push($param,$offset);
+		array_push($param,$rows);
+		$data=D('Order')->query($sql,$param);
+		foreach ($data as $key=>$basevalue){
+			if($basevalue['status']=='0'){
+				$data[$key]['status']='已提交订单';
+			}else if($basevalue['status']=='1'){
+				$data[$key]['status']='已装车';
+			}else{
+				$data[$key]['status']='已到站';
+			}
+		}
+		$this->assign("order",$data);
+		$this->display();
+
 	}
 }
