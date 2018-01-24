@@ -14,7 +14,22 @@ class OrderController extends AdminBaseController{
         $offset = ($page-1)*$rows;
         $countsql = "SELECT	 count(o.id) AS total FROM	qfant_order o WHERE	1 = 1 ";
       //  $sql = "SELECT	o.* ,c.driver as driver ,r.name as endcityname FROM	qfant_order o left join qfant_cardrive c on o.cardriveid=c.id	LEFT JOIN qfant_route r on r.id=o.endcity WHERE 1=1";
-        $sql = "SELECT	o.* ,c.driver as driver ,r.name as endcityname ,cd.number as number,cd.startdate as startdate FROM	qfant_order o left join qfant_cardrive cd on o.cardriveid=cd.id	LEFT JOIN qfant_route r on r.id=o.endcity LEFT JOIN qfant_car  c on c.id=cd.carid where 1=1";
+     //   $sql = "SELECT	o.* ,c.driver as driver ,r.name as endcityname ,cd.number as number,cd.startdate as startdate FROM	qfant_order o left join qfant_cardrive cd on o.cardriveid=cd.id	LEFT JOIN qfant_route r on r.id=o.endcity LEFT JOIN qfant_car  c on c.id=cd.carid where 1=1";
+      $sql="SELECT
+            o.*,
+            c.driver AS driver,
+            r. NAME AS endcityname,
+        r1.name as sitename,
+            cd.number AS number,
+            cd.startdate AS startdate
+        FROM
+            qfant_order o
+        LEFT JOIN qfant_cardrive cd ON o.cardriveid = cd.id
+        LEFT JOIN qfant_route r ON r.id = o.endcity
+        LEFT JOIN qfant_route r1 ON r1.id = o.site
+        LEFT JOIN qfant_car c ON c.id = cd.carid
+        WHERE
+            1 = 1 ";
         $param=array();
         if(!empty($goodsname)){
             $countsql.=" and o.goodsname like '%s'";
@@ -80,6 +95,7 @@ class OrderController extends AdminBaseController{
             $data['createdate']=strtotime(I('post.createdate'));
             $data['cardriveid']="";
             $data['status']="0";
+            $data['site']="0";
             $result=D('Order')->editData($where,$data);
             if($result){
                 $message['status']=1;
