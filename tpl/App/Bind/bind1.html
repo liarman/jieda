@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>注册</title>
+    <link rel="stylesheet" href="__PUBLIC__/statics/frozenui-1.3.0/css/frozen.css">
+</head>
+<body>
+<!--<header class="ui-header ui-header-positive ui-border-b">-->
+    <!--<h1>注册</h1>-->
+<!--</header>-->
+<section class="ui-container">
+    <div class="ui-form ui-border-t">
+        <form id="registerForm">
+            <input type="hidden" value="{$wecha_id}" name="wecha_id" id="wecha_id">
+            <div class="ui-form-item ui-form-item-show ui-border-b">
+                <label>真实姓名</label>
+                <input type="text" value="" name="username" id="username">
+            </div>
+            <div class="ui-form-item ui-form-item-l ui-border-b">
+                <label class="ui-border-r">
+                    中国 +86
+                </label>
+                <input type="text" placeholder="请输入手机号码" name="phone" id="phone">
+            </div>
+        </form>
+        <div class="ui-btn-wrap">
+            <a class="ui-btn-lg ui-btn-primary" id="btnRegister">
+                确定
+            </a>
+        </div>
+    </div>
+</section>
+<script src="__PUBLIC__/statics/frozenui-1.3.0/lib/zepto.min.js"></script>
+<script src="__PUBLIC__/statics/frozenui-1.3.0/js/frozen.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var wecha_id = "{$wecha_id}";
+        $("#btnRegister").on("click", function () {
+            var wecha_id = $('#wecha_id').val();
+            var username = $('#username').val();
+            var phone = $('#phone').val();
+            var code = $('#phone').val();
+            if (wecha_id == "") {
+                alert('请在微信端打开');
+                return false;
+            }
+            if (username == "") {
+                alert('真实姓名不能为空');
+                return false;
+            }
+//        if(code==""){
+//            alert('验证码不能为空');
+//            return false;
+//        }
+            var reg = /^1[3|4|5|7|8|9]\d{9}$/;
+            if (!reg.test(phone)) {
+                alert("手机号输入不正确");
+                return false;
+            }
+            $.post("{:U('App/Bind/register')}", $('#registerForm').serialize(), function (data) {
+                if (data.status == 1) {
+                    alert(data.message);
+                    location.href = "{:U('App/Bind/myInfo')}" + '/wecha_id/' + wecha_id;
+                } else {
+                    alert(data.message);
+                }
+            })
+        });
+    });
+</script>
+</body>
+</html>
