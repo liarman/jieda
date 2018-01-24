@@ -79,16 +79,47 @@ class CardriveController extends AdminBaseController{
             if($result){
                 $cardriveid=I('post.cardriveid');
                 $routeid=I('post.routeid');
-                $sql = "select o.* from qfant_order as o ,qfant_cardrive as cd ,qfant_cardriveroute as cdr where o.endcity=cdr.routeid AND cd.id=cdr.cardriveid and o.cardriveid=cd.id  and o.endcity='$routeid' and o.cardriveid='$cardriveid'";
+                $sql="SELECT
+                        o.*
+                    FROM
+                        qfant_order AS o
+                    WHERE
+                    o.status=1 and
+                     o.endcity = '$routeid'
+                    AND o.cardriveid ='$cardriveid'";
+             //   $sql = "select o.* from qfant_order as o ,qfant_cardrive as cd ,qfant_cardriveroute as cdr where o.endcity=cdr.routeid AND cd.id=cdr.cardriveid and o.cardriveid=cd.id  and o.endcity='$routeid' and o.cardriveid='$cardriveid'";
                 $d=D('Order')->query($sql,"");
-                if($d){
+                if($d){//设置订单已到站
                     $order['status']='2';
+                    $order['site']= $routeid;//订单更新站点数据
                     for($i = 0; $i <sizeof($d); $i++)
                     {
                         $where['id']=$d[$i]['id'];
                         D('Order')->editData($where,$order);
                     }
                     $where['id']=$d['id'];
+                    D('Order')->editData($where,$order);
+
+                }
+                //没有到站的也要添加站点
+               // $sql1 = "select o.* from qfant_order as o ,qfant_cardrive as cd ,qfant_cardriveroute as cdr where o.endcity=cdr.routeid AND cd.id=cdr.cardriveid and o.cardriveid=cd.id  and o.endcity<>'$routeid' and o.cardriveid='$cardriveid'";
+                $sql1="SELECT
+                        o.*
+                    FROM
+                        qfant_order AS o
+                    WHERE
+                    o.status=1 and
+                     o.endcity <> '$routeid'
+                    AND o.cardriveid ='$cardriveid'";
+                $d1=D('Order')->query($sql1,"");
+                if($d1){//设置订单已到站
+                    $order['site']= $routeid;//订单更新站点数据
+                    for($i = 0; $i <sizeof($d1); $i++)
+                    {
+                        $where['id']=$d1[$i]['id'];
+                        $res=D('Order')->editData($where,$order);
+                    }
+                    $where['id']=$d1['id'];
                     D('Order')->editData($where,$order);
 
                 }
