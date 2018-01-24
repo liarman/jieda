@@ -57,11 +57,9 @@
   function query(type)
   {
       $.ajax({
-          url : "{:U('App/Bind/ajaxMyOrder')}",
+          url : "{:U('App/Bind/mySelectOrder')}",
           data : {
               pageNo : $("#pageNo").val(),
-              wecha_id:$("#wecha_id").val()
-
           },
           cache : false,
           success : function(data)
