@@ -33,13 +33,13 @@
                     <input type="hidden" name="pageNo" id="pageNo" value="1" />
                   <!-- <ul class="ui-list ui-list-pure ui-border-tb trade-area">-->
                        <ul class="ui-list ui-list-function  ui-border-tb trade-area">
-                           <volist name="order" id="orde" >
+                         <!--  <volist name="order" id="orde" >
 
-                           <input type="text" name="receivername" id="receivername" value="{$orde['receivername']}" />
-                           <input type="text" name="receivertel" id="receivertel" value="{$orde['receivertel']}" />
-                           <input type="text" name="shipper" id="shipper" value="{$orde['shipper']}" />
-                           <input type="text" name="shippertel" id="shippertel" value="{$orde['shippertel']}" />
-                            </volist>
+                           <input type="hidden" name="receivername" id="receivername" value="{$orde['receivername']}" />
+                           <input type="hidden" name="receivertel" id="receivertel" value="{$orde['receivertel']}" />
+                           <input type="hidden" name="shipper" id="shipper" value="{$orde['shipper']}" />
+                           <input type="hidden" name="shippertel" id="shippertel" value="{$orde['shippertel']}" />
+                            </volist>-->
                             <volist name="order" id="or">
                           <li>
                                <div class="ui-list-info ui-border-t">
@@ -52,8 +52,7 @@
                                    操作:<a  href="{:U('App/Bind/driveRoute')}/cardriveid/{$or['receiveraddress']}">轨迹</a>
                                    </p>
                                </div>
-                              <div class="ui-btn">PK</div>
-                                </li>
+                          </li>
                             </volist>
                       </ul>
                   <!--  </ul>-->
