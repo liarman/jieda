@@ -19,7 +19,7 @@
             <table border="0" cellspacing="0" cellpadding="0">
                 <tr><td class="title">用户名：</td><td><input type="text" class="form-control txt" name="username"/></td></tr>
                 <tr><td class="title">密   码：</td><td><input type="password" class="form-control txt" name="password"/></td></tr>
-                <tr><td class="title">验证码：</td><td><input type="text" class="form-control txt txt2" name="verify"/><span class="yzm"><img class="verify" src="{:U('Home/Reg/verify')}" alt="验证码" onClick="this.src=this.src+'?'+Math.random()" /></span></td></tr>
+                <tr><td class="title">验证码：</td><td><input type="text" class="form-control txt txt2" name="verify"/><span class="yzm"><img id="verifycode" class="verify" src="{:U('Home/Reg/verify')}" alt="验证码" onClick="this.src=this.src+'?'+Math.random()" /></span></td></tr>
                 <tr class="errortd"><td>&nbsp;</td><td><i class="ico-error"></i><span class="errorword">用户名或密码错误，请重新输入！</span></td></tr>
                 <tr><td>&nbsp;</td><td><input type="button" class="loginbtn" value="登录"  id="login" /><input type="button" class="resetbtn" value="重置" onclick="reset()" /></td></tr>
                <!-- <tr><td>&nbsp;</td><td class="forgetpsw"><a href="login_forgetA.html">忘记密码？</a></td></tr>-->
@@ -76,6 +76,7 @@
             }else{
                 $(".errorword").empty().html("验证码输入错误");
                 $(".errortd").show();
+                $("#verifycode").click();
                 return false;
             }
         });
