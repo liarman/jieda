@@ -48,16 +48,16 @@ class BindController extends WapController{
 			}
            
         }else {
-           $wecha_id=$this->wecha_id;
-			$res=D("Customer")->where(array('wecha_id'=>$wecha_id))->find();
-           if($res){//已注册跳到运单列表
-				$this->redirect('App/Bind/myOrder', array('wecha_id' =>$wecha_id));
-				$this->assign('wecha_id',$wecha_id);
+          // $wecha_id=$this->wecha_id;
+		//	$res=D("Customer")->where(array('wecha_id'=>$wecha_id))->find();
+       //    if($res){//已注册跳到运单列表
+		//		$this->redirect('App/Bind/myOrder', array('wecha_id' =>$wecha_id));
+		//		$this->assign('wecha_id',$wecha_id);
+		//		$this->display();
+		//	}else {//未注册跳到注册页面
+			//	$this->assign('wecha_id', $wecha_id);
 				$this->display();
-			}else {//未注册跳到注册页面
-				$this->assign('wecha_id', $wecha_id);
-				$this->display();
-			}
+		//	}
         }
     }
 
@@ -302,5 +302,52 @@ class BindController extends WapController{
 			$message['message']='解除绑定失败！';
 		}
 	$this->ajaxReturn($message,'JSON');
+	}
+
+	public  function  mySelectOrder(){
+		$pageNo = I("get.pageNo");
+		if($pageNo==0){
+			$pageNo =1;
+		}
+		$rows = 10;
+		$offset = ($pageNo-1)*$rows;
+		$receivername=I("get.receivername");
+		$receivertel=I("get.receivertel");
+		$shipper=I("get.shipper");
+		$shippertel=I("get.shippertel");
+		$sql="SELECT	o.* ,c.driver as driver ,r.name as endcityname ,cd.number as number,cd.startdate as startdate FROM	qfant_order o left join qfant_cardrive cd on o.cardriveid=cd.id	LEFT JOIN qfant_route r on r.id=o.endcity LEFT JOIN qfant_car  c on c.id=cd.carid where 1=1";
+		$param=array();
+		if(!empty($receivername)){
+			$sql.=" and o.receivername like '%s'";
+			array_push($param,'%'.$receivername.'%');
+		}
+		if(!empty($receivertel)){
+			$sql.=" and o.receivertel like '%s'";
+			array_push($param,'%'.$receivertel.'%');
+		}
+		if(!empty($shipper)){
+			$sql.=" and o.shipper like '%s'";
+			array_push($param,'%'.$shipper.'%');
+		}
+		if(!empty($shippertel)){
+			$sql.=" and o.shippertel like '%s'";
+			array_push($param,'%'.$shippertel.'%');
+		}
+		$sql.=" order by o.createdate desc,o.id desc  limit %d,%d ";
+		array_push($param,$offset);
+		array_push($param,$rows);
+		$data=D('Order')->query($sql,$param);
+		foreach ($data as $key=>$basevalue){
+			if($basevalue['status']=='0'){
+				$data[$key]['status']='已提交订单';
+			}else if($basevalue['status']=='1'){
+				$data[$key]['status']='已装车';
+			}else{
+				$data[$key]['status']='已到站';
+			}
+		}
+
+		$this->ajaxReturn($data,'JSON');
+
 	}
 }
