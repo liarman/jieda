@@ -183,6 +183,7 @@ class BindController extends WapController{
 	public  function driveRoute(){
 		$cardriveid=I("get.cardriveid");
 		$wecha_id=I("get.wecha_id");
+		$orderno=I("get.orderno");
 		if($cardriveid){
 			$sql ="SELECT r.name,c3.arrivedate FROM qfant_route AS r,qfant_car AS c1,qfant_cardrive AS c2,qfant_cardriveroute AS c3 WHERE c3.cardriveid = '$cardriveid' AND c3.cardriveid = c2.id AND c3.routeid = r.id AND c2.carid = c1.id ;";
 			$data=D('Cardriveroute')->query($sql,"");
