@@ -59,6 +59,7 @@
           url : "{:U('App/Bind/mySelectOrder')}",
           data : {
               pageNo : $("#pageNo").val(),
+              receivername:$("receivername").val()
           },
           cache : false,
           success : function(data)
