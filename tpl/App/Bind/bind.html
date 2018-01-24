@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,19 +14,12 @@
 
 <body ontouchstart>
 <header class="ui-header ui-header-positive ui-border-b">
-   <i class="ui-icon-return" onclick="history.back()"></i><h1>我要发件</h1><button class="ui-btn">回首页</button>
 </header>
 <footer class="ui-footer ui-footer-btn">
-    <ul class="ui-tiled ui-border-t">
-        <li data-href="{:U('App/Bind/myOrder',array('wecha_id'=>$wecha_id))}" class="ui-border-r"><div>我的订单</div></li>
-        <li data-href="{:U('App/Bind/mySend',array('wecha_id'=>$wecha_id))}" class="ui-border-r"><div>我要发件</div></li>
-        <li data-href="{:U('App/Bind/myInfo',array('wecha_id'=>$wecha_id))}"><div>个人中心</div></li>
-    </ul>
 </footer>
 <section class="ui-container">
     <div class="ui-form ui-border-t">
         <form id="sendFrom">
-            <input type="hidden"  name="wecha_id" id="wecha_id" value="{$wecha_id}">
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label>
                     发件人姓名
@@ -75,12 +66,9 @@
                 location.href= $(this).data('href');
             }
         });
-        $('.ui-header .ui-btn').click(function(){
-          location.href= "{:U('App/Bind/myInfo',array('wecha_id'=>$wecha_id))}";
-        });
+
 
      $("#sendFormSelect").on("click",function(){
-        // var wecha_id=$('#wecha_id').val();
          var receivername=$('#receivername').val();
          var receivertel=$('#receivertel').val();
          var shipper=$('#shipper').val();
@@ -89,18 +77,9 @@
              alert('查询条件不能为空');
              return false;
          }
-       //  location.href = '{:url("index/exam/index")}?pid='+pid+'&id='+id;
-         // location.href = '{:U("App/Bind/mySelectOrder")}?receivername='+receivername+'&receivertel='+receivertel+'&shipper='+shipper+'&shippertel='+shippertel;
-         location.href= "{:U('App/Bind/mySelectOrder',array('receivername'=>receivername,'receivertel'=>receivertel,'shipper'=>shipper,'shippertel'=>shippertel))}";
-       /*  $.post("{:U('App/Bind/mySelectOrder')}", $('#sendFrom').serialize(), function(data){
-             if(data.status==1){
-                 alert( data.message);
-                 location.href= "{:U('App/Bind/myOrder',array('wecha_id'=>$wecha_id))}";
-             }else {
-                 alert( data.message);
-             }
+         location.href = '{:U("App/Bind/mySelectOrder")}?receivername='+receivername+'&receivertel='+receivertel+'&shipper='+shipper+'&shippertel='+shippertel;
+         //  location.href= "{:U('App/Bind/mySelectOrder',array('receivername'=>receivername,'receivertel'=>receivertel,'shipper'=>shipper,'shippertel'=>shippertel))}";
 
-         })*/
      });
     $("#cancel").on("click",function(){
         $('#receivername').val("");
