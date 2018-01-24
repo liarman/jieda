@@ -346,8 +346,9 @@ class BindController extends WapController{
 				$data[$key]['status']='已到站';
 			}
 		}
-
-		$this->ajaxReturn($data,'JSON');
+		$data['receivername']=$receivername;$data['receivertel']=$receivertel;$data['shipper']=$shipper;$data['shippertel']=$shippertel;
+		$this->assign("order",$data);
+		$this->display();
 
 	}
 }
