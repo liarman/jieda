@@ -338,8 +338,6 @@ class BindController extends WapController{
 		array_push($param,$rows);
 		$data=D('Order')->query($sql,$param);
 		foreach ($data as $key=>$basevalue){
-			$data[$key]['receivername']=$receivername;$data[$key]['receivertel']=$receivertel;
-			$data[$key]['shipper']=$shipper;$data[$key]['shippertel']=$shippertel;
 			if($basevalue['status']=='0'){
 				$data[$key]['status']='已提交订单';
 			}else if($basevalue['status']=='1'){
@@ -348,8 +346,6 @@ class BindController extends WapController{
 				$data[$key]['status']='已到站';
 			}
 		}
-		$data['receivername']=$receivername;$data['receivertel']=$receivertel;
-		$data['shipper']=$shipper;$data['shippertel']=$shippertel;
 		$this->assign("order",$data);
 		$this->display();
 
