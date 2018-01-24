@@ -10,7 +10,7 @@ class AdminBaseController extends BaseController{
 	 */
 	public function _initialize(){
 		parent::_initialize();
-		if(empty(session('user'))){
+		if(getSession('user')==false){
 			if (IS_AJAX) {
 				$result["message"]='您需要重新登录！';
 				$result["status"]=401;
@@ -21,10 +21,11 @@ class AdminBaseController extends BaseController{
 				$this->redirect('/Admin/Login/index');
 			}
 		}else {
+            setSession("user",getSession('user'));
 			$auth=new \Think\Auth();
 			$rule_name=MODULE_NAME.'/'.CONTROLLER_NAME.'/'.ACTION_NAME;
-			$result=$auth->check($rule_name,$_SESSION['user']['id']);
-			//print_r($rule_name);die;
+			$result=$auth->check($rule_name,getSession('user')['id']);
+			//print_r($_SESSION);die;
 			if(!$result){
 				if (IS_APP || IS_AJAX) {
 					$result["message"]='您没有权限访问！';
