@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>订单</title>
+    <title>我的订单</title>
     <script type="text/javascript" src="http://tajs.qq.com/stats?sId=37342703" charset="UTF-8"></script>
     <link rel="stylesheet" href="__PUBLIC__/statics/frozenui-1.3.0/css/frozen.css">
     <link rel="stylesheet" href="__PUBLIC__/statics/frozenui-1.3.0/css/demo.css">
@@ -49,7 +49,7 @@
                                     收件人电话：{$or['receivertel']} <br/>
                                     收件人地址：{$or['receiveraddress']} <br/>
                                     运单状态：{$or['status']} <br/>
-                                    操作:<a  href="{:U('App/Bind/driveRoute')}/cardriveid/{$or['cardriveid']}">轨迹</a>
+                                    操作:<a  href="{:U('App/Bind/driveRoute')}/cardriveid/{$or['receiveraddress']}">轨迹</a>
                                 </p>
                             </div>
                         </li>
