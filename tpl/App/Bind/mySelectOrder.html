@@ -49,8 +49,8 @@
                                    收件人电话：{$or['receivertel']} <br/>
                                    收件人地址：{$or['receiveraddress']} <br/>
                                    运单状态：{$or['status']} <br/>
-                                   操作:<a  href="{:U('App/Bind/driveRoute')}/cardriveid/{$or['cardriveid']}/orderno/{$or['orderno']}">轨迹</a>
-                                       <a  href=" {:U('App/Bind/driveRoute',array('cardriveid'=>{$or['cardriveid']},'orderno'=>{$or['orderno']}))}">轨迹2</a>
+                                   操作:<a  href="{:U('App/Bind/driveRoute')}/cardriveid/{$or['cardriveid']}">轨迹</a>
+                                       <a  href=" {:U('App/Bind/driveRoute',array('cardriveid'=>{$or['cardriveid']}))}">轨迹2</a>
                                    </p>
                                </div>
                           </li>
