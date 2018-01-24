@@ -1581,7 +1581,7 @@ function getCityFromIp($ip){
  * @param Mixed $data  session data
  * @param Int  $expire 超时时间(秒)
  */
-function setSession($name, $data, $expire=60){
+function setSession($name, $data, $expire=3600){
     $session_data = array();
     $session_data['data'] = $data;
     $session_data['expire'] = time()+$expire;
