@@ -4,7 +4,7 @@ use Common\Controller\WapController;
 /**
  * 认证控制器
  */
-class BindController extends WapController{
+class BindController extends  BaseController{
 	 public function _initialize() {
          parent::_initialize();
          $this->assign('staticFilePath',str_replace('./','/',StaticFilePath.'Static'));
