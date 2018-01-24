@@ -90,8 +90,8 @@
              return false;
          }
        //  location.href = '{:url("index/exam/index")}?pid='+pid+'&id='+id;
-         location.href = '{:U("App/Bind/mySelectOrder")}?receivername='+receivername+'&receivertel='+receivertel+'&shipper='+shipper+'&shippertel='+shippertel;
-        // location.href= "{:U('App/Bind/mySelectOrder',array('receivername'=>receivername,'receivertel'=>receivertel,'shipper'=>shipper,'shippertel'=>shippertel))}";
+         // location.href = '{:U("App/Bind/mySelectOrder")}?receivername='+receivername+'&receivertel='+receivertel+'&shipper='+shipper+'&shippertel='+shippertel;
+         location.href= "{:U('App/Bind/mySelectOrder',array('receivername'=>receivername,'receivertel'=>receivertel,'shipper'=>shipper,'shippertel'=>shippertel))}";
        /*  $.post("{:U('App/Bind/mySelectOrder')}", $('#sendFrom').serialize(), function(data){
              if(data.status==1){
                  alert( data.message);
