@@ -348,7 +348,8 @@ class BindController extends WapController{
 				$data[$key]['status']='已到站';
 			}
 		}
-
+		$data['receivername']=$receivername;$data['receivertel']=$receivertel;
+		$data['shipper']=$shipper;$data['shippertel']=$shippertel;
 		$this->assign("order",$data);
 		$this->display();
 
