@@ -353,8 +353,17 @@ class BindController extends  WapController{
 		array_push($param,$rows);
 		$data=D('Order')->query($sql,$param);
 		foreach ($data as $key=>$basevalue){
-			$data[$key]['arrivedate']=date('Y-m-d H:i' , $basevalue['arrivedate']) ;//到站时间
-			$data[$key]['assembledate']=date('Y-m-d H:i' , $basevalue['assembledate']) ;//托运时间
+			if($basevalue['sitetime']==null){
+				$data[$key]['sitetime']="";
+			}else{
+				$data[$key]['sitetime']=date('Y-m-d H:i' , $basevalue['sitetime']) ;//到站时间
+			}
+			if($basevalue['createdate']==null){
+				$data[$key]['createdate']="";
+			}else{
+				$data[$key]['createdate']=date('Y-m-d H:i' , $basevalue['createdate']) ;//托运时间
+			}
+
 			if($basevalue['status']=='0'){
 				$data[$key]['status']='已提交订单';
 			}else if($basevalue['status']=='1'){
