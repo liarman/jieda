@@ -91,6 +91,7 @@ class CardriveController extends AdminBaseController{
                 $d=D('Order')->query($sql,"");
                 if($d){//设置订单已到站
                     $order['status']='2';
+                    $order['sitetime']=strtotime(I('post.arrivedate'));//更新到站时间
                     $order['site']= $routeid;//订单更新站点数据
                     for($i = 0; $i <sizeof($d); $i++)
                     {
@@ -114,6 +115,7 @@ class CardriveController extends AdminBaseController{
                 $d1=D('Order')->query($sql1,"");
                 if($d1){//设置订单已到站
                     $order['site']= $routeid;//订单更新站点数据
+                    $order['sitetime']=strtotime(I('post.arrivedate'));//更新到站时间
                     for($i = 0; $i <sizeof($d1); $i++)
                     {
                         $where['id']=$d1[$i]['id'];
