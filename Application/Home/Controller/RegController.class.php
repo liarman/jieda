@@ -37,28 +37,5 @@ class RegController extends HomeBaseController
     {
         $this->display();
     }
-    /* 生成验证码 */
-    public function verify()
-    {
-        $config = [
-            'fontSize' => 16, // 验证码字体大小
-            'length' => 4, // 验证码位数
-            'imageH' => 37,
-            'imageW' => 106,
-            'useCurve' =>false,
-            'useNoise'    =>    false
-        ];
-        $Verify = new Verify($config);
-        $Verify->entry();
-    }
-
-    /* 验证码校验 */
-    public function check_verify($code, $id = '')
-    {
-        $code=I('post.code');
-        $verify = new \Think\Verify();
-        $res = $verify->check($code, $id);
-        $this->ajaxReturn($res, 'json');
-    }
 }
 

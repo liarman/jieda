@@ -23,8 +23,6 @@
     <script src="__EASYUI__/common.js"></script>
     <script src="__EASYUI__/formatter.js"></script>
     <script src="__EASYUI__/extend/validate.js"></script>
-    <script type="text/javascript" src="http://cdn.goeasy.io/goeasy.js"></script>
-
 </head>
 <body id="main" class="easyui-layout">
 <noscript>
@@ -61,7 +59,7 @@
                         </div>
                     </li>
                     <li class="user">
-                        <span class="user-icon">欢迎您：{$_SESSION['user']['username']}</span>
+                        <span class="user-icon">欢迎您：{$_SESSION['user']['data']['username']}</span>
                     </li>
                 </ul>
             </div>
@@ -140,7 +138,7 @@
     <form id="editInfoForm" method="post">
         <input type="hidden" name="id" value="">
         <div style="margin-bottom:20px">
-            <input class="easyui-textbox" id="username"name="name" style="width:80%" data-options="label:'登录账号:'" value=" {$_SESSION['user']['username']}" disabled="true" >
+            <input class="easyui-textbox" id="username"name="name" style="width:80%" data-options="label:'登录账号:'" value=" {$_SESSION['user']['data']['username']}" disabled="true" >
 
         </div>
         <div style="margin-bottom:20px">

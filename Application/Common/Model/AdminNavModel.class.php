@@ -28,6 +28,7 @@ class AdminNavModel extends BaseModel{
 	 * @return array       	结构数据
 	 */
 	public function getTreeData($type='tree',$order=''){
+        $user=getSession('user');
 		// 判断是否需要排序
 		if(empty($order)){
 			$data=$this->select();
@@ -44,9 +45,9 @@ class AdminNavModel extends BaseModel{
 			// 显示有权限的菜单
 			$auth=new \Think\Auth();
 			foreach ($data as $k => $v) {
-				if ($auth->check($v['mca'],$_SESSION['user']['id'])) {
+				if ($auth->check($v['mca'],$user['id'])) {
 					foreach ($v['_data'] as $m => $n) {
-						if(!$auth->check($n['mca'],$_SESSION['user']['id'])){
+						if(!$auth->check($n['mca'],$user['id'])){
 							unset($data[$k]['_data'][$m]);
 						}
 					}

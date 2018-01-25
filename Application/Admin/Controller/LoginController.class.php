@@ -1,6 +1,7 @@
 <?php
 namespace Admin\Controller;
 use Common\Controller\BaseController;
+use Think\Verify;
 /**
  * 后台首页控制器
  */
@@ -28,11 +29,12 @@ class LoginController extends BaseController{
 				$this->ajaxReturn($message,'JSON');
 			}else{
 				M('Users')->where(array('id'=>$data['id']))->save(array('last_login_time'=>time(),'last_login_ip'=>get_client_ip()));
-				$_SESSION['user']=array(
+				$user=array(
 					'id'=>$data['id'],
 					'username'=>$data['username'],
 					'avatar'=>$data['avatar']
 				);
+                setSession("user",$user);
 				$loginrecord['userid']=$data['id'];
 				$loginrecord['loginTime']=date('Y-m-d H:i:s');
 				$loginrecord['loginip']=get_client_ip();
@@ -45,7 +47,7 @@ class LoginController extends BaseController{
 			//	$this->redirect('Admin/Index/index');
 			}
 		}else{
-			$data=check_login() ? $_SESSION['user']['username'].'已登录' : '未登录';
+			$data=check_login() ? $_SESSION['user']['data']['username'].'已登录' : '未登录';
 			$assign=array(
 				'data'=>$data
 			);
@@ -97,5 +99,27 @@ class LoginController extends BaseController{
 		$data=I('post.');
 		echo intval(geetest_chcek_verify($data));
 	}
+    /* 生成验证码 */
+    public function verify()
+    {
+        $config = [
+            'fontSize' => 16, // 验证码字体大小
+            'length' => 4, // 验证码位数
+            'imageH' => 37,
+            'imageW' => 106,
+            'useCurve' =>false,
+            'useNoise'    =>    false
+        ];
+        $Verify = new Verify($config);
+        $Verify->entry();
+    }
 
+    /* 验证码校验 */
+    public function check_verify($code, $id = '')
+    {
+        $code=I('post.code');
+        $verify = new \Think\Verify();
+        $res = $verify->check($code, $id);
+        $this->ajaxReturn($res, 'json');
+    }
 }

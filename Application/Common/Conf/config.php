@@ -37,8 +37,7 @@ return array(
     'URL_MODEL'              => 2,  //启用rewrite
 //***********************************SESSION设置**********************************
     'SESSION_OPTIONS'        => array(
-        'name'               => 'YIJUADMIN',//设置session名
-        'expire'             => 2*3600*1, //SESSION保存15天
+        'expire'             =>0, //SESSION保存15天
         'use_trans_sid'      => 1,//跨页传递
         'use_only_cookies'   => 0,//是否只开启基于cookies的session的会话方式
     ),
