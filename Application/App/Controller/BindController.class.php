@@ -356,12 +356,12 @@ class BindController extends  WapController{
 			if($basevalue['sitetime']==null){
 				$data[$key]['sitetime']="";
 			}else{
-				$data[$key]['sitetime']=date('Y-m-d H:i' , $basevalue['sitetime']) ;//到站时间
+				$data[$key]['sitetime']=date('Y-m-d' , $basevalue['sitetime']) ;//到站时间
 			}
 			if($basevalue['createdate']==null){
 				$data[$key]['createdate']="";
 			}else{
-				$data[$key]['createdate']=date('Y-m-d H:i' , $basevalue['createdate']) ;//托运时间
+				$data[$key]['createdate']=date('Y-m-d' , $basevalue['createdate']) ;//托运时间
 			}
 
 			if($basevalue['status']=='0'){
