@@ -315,13 +315,12 @@ class BindController extends  WapController{
 		$receivertel=I("get.receivertel");
 		$shipper=I("get.shipper");
 		$shippertel=I("get.shippertel");
-		$sql1="SELECT	o.* ,c.driver as driver ,r.name as endcityname ,cd.number as number,cd.startdate as startdate FROM	qfant_order o left join qfant_cardrive cd on o.cardriveid=cd.id	LEFT JOIN qfant_route r on r.id=o.endcity LEFT JOIN qfant_car  c on c.id=cd.carid where 1=1";
+		//$sql1="SELECT	o.* ,c.driver as driver ,r.name as endcityname ,cd.number as number,cd.startdate as startdate FROM	qfant_order o left join qfant_cardrive cd on o.cardriveid=cd.id	LEFT JOIN qfant_route r on r.id=o.endcity LEFT JOIN qfant_car  c on c.id=cd.carid where 1=1";
 		$sql="SELECT
             o.*,
             c.driver AS driver,
             r. NAME AS endcityname,
-        r1.name as sitename,
-        r1.arrivedate as sitetime,
+            r1.name as sitename,
             cd.number AS number,
             cd.startdate AS startdate
         FROM
@@ -353,7 +352,12 @@ class BindController extends  WapController{
 		array_push($param,$offset);
 		array_push($param,$rows);
 		$data=D('Order')->query($sql,$param);
+	/*	foreach ($data as $key=>$basevalue){
+			$data[$key]['arrivedate']=date('Y-m-d H:i' , $basevalue['arrivedate']) ;
+		}*/
 		foreach ($data as $key=>$basevalue){
+			$data[$key]['arrivedate']=date('Y-m-d H:i' , $basevalue['arrivedate']) ;//到站时间
+			$data[$key]['assembledate']=date('Y-m-d H:i' , $basevalue['assembledate']) ;//托运时间
 			if($basevalue['status']=='0'){
 				$data[$key]['status']='已提交订单';
 			}else if($basevalue['status']=='1'){
