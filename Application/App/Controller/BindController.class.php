@@ -315,7 +315,23 @@ class BindController extends  WapController{
 		$receivertel=I("get.receivertel");
 		$shipper=I("get.shipper");
 		$shippertel=I("get.shippertel");
-		$sql="SELECT	o.* ,c.driver as driver ,r.name as endcityname ,cd.number as number,cd.startdate as startdate FROM	qfant_order o left join qfant_cardrive cd on o.cardriveid=cd.id	LEFT JOIN qfant_route r on r.id=o.endcity LEFT JOIN qfant_car  c on c.id=cd.carid where 1=1";
+		$sql1="SELECT	o.* ,c.driver as driver ,r.name as endcityname ,cd.number as number,cd.startdate as startdate FROM	qfant_order o left join qfant_cardrive cd on o.cardriveid=cd.id	LEFT JOIN qfant_route r on r.id=o.endcity LEFT JOIN qfant_car  c on c.id=cd.carid where 1=1";
+		$sql="SELECT
+            o.*,
+            c.driver AS driver,
+            r. NAME AS endcityname,
+        r1.name as sitename,
+        r1.arrivedate as sitetime,
+            cd.number AS number,
+            cd.startdate AS startdate
+        FROM
+            qfant_order o
+        LEFT JOIN qfant_cardrive cd ON o.cardriveid = cd.id
+        LEFT JOIN qfant_route r ON r.id = o.endcity
+        LEFT JOIN qfant_route r1 ON r1.id = o.site
+        LEFT JOIN qfant_car c ON c.id = cd.carid
+        WHERE
+            1 = 1 ";
 		$param=array();
 		if(!empty($receivername)){
 			$sql.=" and o.receivername like '%s'";
