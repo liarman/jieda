@@ -98,7 +98,7 @@
     </form>
 </div>
 <div id="arriveDlg" class="easyui-dialog" title="到站列表" style="width:600px;padding:10px 20px;height: 400px" closed="true" modal="true">
-    <div id="arriveGrid" style=""></div>
+    <div id="arriveGrid" style=""    singleSelect="true"  ></div>
 </div>
 <div id="endCityDlg" class="easyui-dialog" title="收货城市" style="width:600px;padding:10px 20px;height: 240px" closed="true" modal="true">
     <form id="endcityForm" method="post">
@@ -157,6 +157,30 @@
 
     </form>
 </div>
+<div id="editarrive" class="easyui-dialog" title="添加" style="width:400px;padding:10px 20px;" closed="true" modal="true">
+    <form id="editarriveForm" method="post">
+        <table>
+            <tr>
+                <td>到达站点:</td>
+                <td><input id="editroute" name="routeid" class="easyui-combobox"  url="{:U('Admin/Cardrive/routeList')}" valueField="id" textField="name"></td>
+            </tr>
+            <tr>
+                <td>到达时间:</td>
+                <td><input id="editarrivetime" name="arrivedate" class="easyui-datetimebox" data-options="delay:1000,required:true,height:30" /></td>
+            </tr>
+            <!-- <tr>
+                 <td>车次:</td>
+                 <td><input name="number" class="easyui-numberbox" data-options="delay:1000,required:true,height:30" /></td>
+             </tr>-->
+            <tr>
+                <td></td>
+                <td><a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="editarriveSubmit()" style="width:90px">保存</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#addarrive').dialog('close')" style="width:90px">取消</a></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
 
 <script type="text/javascript">
     var addCardriveUrl= "{:U('Admin/Cardrive/addCardrive')}";
@@ -168,6 +192,8 @@
     var orderListUrl="{:U('Admin/Order/orderList')}";
      var printUrl ="{:U('Admin/Order/printorderList')}";
     var editEndCity = "{:U('Admin/Order/editEndCity')}";
+    var editarriveUrl="{:U('Admin/Cardrive/editarrive')}";//编辑到站站点
+    var deletearriveUrl="{:U('Admin/Cardrive/deletearrive')}";//删除站点
 </script>
 </body>
 </html>
