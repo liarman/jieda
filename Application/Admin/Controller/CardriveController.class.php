@@ -24,7 +24,7 @@ class CardriveController extends AdminBaseController{
         $offset = ($page-1)*$rows;
         $cardriveid = I('get.cardriveid');
         $countsql ="select count(id) AS total from qfant_cardriveroute ";
-        $sql ="SELECT c2.id,r.name,c3.arrivedate ,c2.number FROM qfant_route AS r,qfant_car AS c1,qfant_cardrive AS c2,qfant_cardriveroute AS c3 WHERE c3.cardriveid = '$cardriveid' AND c3.cardriveid = c2.id AND c3.routeid = r.id AND c2.carid = c1.id ;";
+        $sql ="SELECT c2.id,r.name,c3.arrivedate ,c3.id as cdid,c3.routeid as routeid,c2.number FROM qfant_route AS r,qfant_car AS c1,qfant_cardrive AS c2,qfant_cardriveroute AS c3 WHERE c3.cardriveid = '$cardriveid' AND c3.cardriveid = c2.id AND c3.routeid = r.id AND c2.carid = c1.id ;";
 
         $param=array();
         array_push($param,$offset);
@@ -179,6 +179,42 @@ class CardriveController extends AdminBaseController{
                 $message['status']=0;
                 $message['message']='保存失败';
             }
+        }
+        $this->ajaxReturn($message,'JSON');
+    }
+    /**
+     * 编辑站点
+     */
+    public function editarrive(){
+        $id=I('get.id');
+        $data['routeid']=I('post.routeid');
+        $data['arrivedate']=strtotime(I('post.arrivedate'));
+        $where['id']=$id;
+        $result=D('Cardriveroute')->editData($where,$data);
+        if($result){
+            $message['status']=1;
+            $message['message']='保存成功';
+        }else {
+            $message['status']=0;
+            $message['message']='保存失败';
+        }
+        $this->ajaxReturn($message,'JSON');
+    }
+    /**
+     * 删除站点
+     */
+    public function deletearrive(){
+        $id=I('get.id');
+        $map=array(
+            'id'=>$id
+        );
+        $result=D('Cardriveroute')->deleteData($map);
+        if($result){
+            $message['status']=1;
+            $message['message']='删除成功';
+        }else {
+            $message['status']=0;
+            $message['message']='删除失败';
         }
         $this->ajaxReturn($message,'JSON');
     }
