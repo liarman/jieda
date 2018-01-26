@@ -340,19 +340,19 @@ public function mySelectOrder(){
             1 = 1 ";
 		$param=array();
 		if(!empty($receivername)){
-			$sql.=" and o.receivername = %d";
+			$sql.=" and o.receivername ='%s'";
 			array_push($param,$receivername);
 		}
 		if(!empty($receivertel)){
-			$sql.=" and o.receivertel = %d";
+			$sql.=" and o.receivertel ='%s'";
 			array_push($param,$receivertel);
 		}
 		if(!empty($shipper)){
-			$sql.=" and o.shipper = %d";
+			$sql.=" and o.shipper ='%s'";
 			array_push($param,$shipper);
 		}
 		if(!empty($shippertel)){
-			$sql.=" and o.shippertel =%d";
+			$sql.=" and o.shippertel ='%s'";
 			array_push($param,$shippertel);
 		}
 		$sql.=" order by o.createdate desc,o.id desc  limit %d,%d ";
