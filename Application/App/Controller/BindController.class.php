@@ -374,13 +374,13 @@ public function mySelectOrder(){
 			if($basevalue['sitename']==null){
 				$data[$key]['sitename']=" ";
 			}
-			if($basevalue['status']=='0'){
+		/*	if($basevalue['status']=='0'){
 				$data[$key]['status']='已提交订单';
 			}else if($basevalue['status']=='1'){
 				$data[$key]['status']='已装车';
 			}else{
 				$data[$key]['status']='已到站';
-			}
+			}*/
 		}
 		/*$this->assign("order",$data);
 		$this->display();*/
