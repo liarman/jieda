@@ -303,8 +303,15 @@ class BindController extends  WapController{
 		}
 		$this->ajaxReturn($message,'JSON');
 	}
-
-	public  function  mySelectOrder(){
+public function mySelectOrder(){
+	$data['receivername']=I("get.receivername");
+	$data['receivertel']=I("get.receivertel");
+	$data['shipper']=I("get.shipper");
+	$data['shippertel']=I("get.shippertel");
+	$this->assign("data",$data);
+	$this->display();
+}
+	public  function  mySelectOrder1(){
 		$pageNo = I("get.pageNo");
 		if($pageNo==0){
 			$pageNo =1;
@@ -333,37 +340,40 @@ class BindController extends  WapController{
             1 = 1 ";
 		$param=array();
 		if(!empty($receivername)){
-			$sql.=" and o.receivername like '%s'";
-			array_push($param,'%'.$receivername.'%');
+			$sql.=" and o.receivername = %d";
+			array_push($param,$receivername);
 		}
 		if(!empty($receivertel)){
-			$sql.=" and o.receivertel like '%s'";
-			array_push($param,'%'.$receivertel.'%');
+			$sql.=" and o.receivertel = %d";
+			array_push($param,$receivertel);
 		}
 		if(!empty($shipper)){
-			$sql.=" and o.shipper like '%s'";
-			array_push($param,'%'.$shipper.'%');
+			$sql.=" and o.shipper = %d";
+			array_push($param,$shipper);
 		}
 		if(!empty($shippertel)){
-			$sql.=" and o.shippertel like '%s'";
-			array_push($param,'%'.$shippertel.'%');
+			$sql.=" and o.shippertel =%d";
+			array_push($param,$shippertel);
 		}
 		$sql.=" order by o.createdate desc,o.id desc  limit %d,%d ";
 		array_push($param,$offset);
 		array_push($param,$rows);
 		$data=D('Order')->query($sql,$param);
 		foreach ($data as $key=>$basevalue){
-			if($basevalue['sitetime']==null){
-				$data[$key]['sitetime']="";
-			}else{
-				$data[$key]['sitetime']=date('Y-m-d' , $basevalue['sitetime']) ;//到站时间
-			}
-			if($basevalue['createdate']==null){
-				$data[$key]['createdate']="";
+			if($basevalue['createdate']==null||$basevalue['createdate']==0){
+				$data[$key]['createdate']=" ";
 			}else{
 				$data[$key]['createdate']=date('Y-m-d' , $basevalue['createdate']) ;//托运时间
 			}
+			if($basevalue['sitetime']==null||$basevalue['sitetime']==0){
+				$data[$key]['sitetime']=" ";
+			}else{
+				$data[$key]['sitetime']=date('Y-m-d' , $basevalue['sitetime']) ;//到站时间
+			}
 
+			if($basevalue['sitename']==null){
+				$data[$key]['sitename']=" ";
+			}
 			if($basevalue['status']=='0'){
 				$data[$key]['status']='已提交订单';
 			}else if($basevalue['status']=='1'){
@@ -372,8 +382,9 @@ class BindController extends  WapController{
 				$data[$key]['status']='已到站';
 			}
 		}
-		$this->assign("order",$data);
-		$this->display();
+		/*$this->assign("order",$data);
+		$this->display();*/
+		$this->ajaxReturn($data,'JSON');
 
 	}
 }
