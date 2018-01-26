@@ -67,7 +67,7 @@ function editOrder(){
 }
 
 function timeStatus1(value){
-    if (value == 0) {
+    if (value == 0||value ==null) {
         return "";
     }
     var newDate = new Date();
@@ -286,7 +286,7 @@ function chooseCar1(orderid,cardriveid){
 }
 
 function timeStatus(val,rowData,row){
-    if(val==null){
+    if(val==null||val==0){
         return "";
     }else{
         // return  Common.DateTimeFormatter(val);
