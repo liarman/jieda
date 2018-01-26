@@ -28,18 +28,18 @@
 <section class="ui-container">
     <section id="list">
         <div class="demo-item">
-            <div class="demo-block">
+            <div class="ui-form ui-border-t">
                 <!-- <ul class="ui-list ui-list-pure ui-border-b">-->
                 <input type="hidden" name="pageNo" id="pageNo" value="1" />
                 <!-- <ul class="ui-list ui-list-pure ui-border-tb trade-area">-->
                 <ul class="ui-list ui-list-function  ui-border-tb trade-area">
-                    <!--  <volist name="order" id="orde" >
 
-                      <input type="hidden" name="receivername" id="receivername" value="{$orde['receivername']}" />
-                      <input type="hidden" name="receivertel" id="receivertel" value="{$orde['receivertel']}" />
-                      <input type="hidden" name="shipper" id="shipper" value="{$orde['shipper']}" />
-                      <input type="hidden" name="shippertel" id="shippertel" value="{$orde['shippertel']}" />
-                       </volist>-->
+                      <input type="hidden" name="receivername" id="receivername" value="{$data['receivername']}" />
+                      <input type="hidden" name="receivertel" id="receivertel" value="{$data['receivertel']}" />
+                      <input type="hidden" name="shipper" id="shipper" value="{$data['shipper']}" />
+                      <input type="hidden" name="shippertel" id="shippertel" value="{$data['shippertel']}" />
+
+<!--
                     <volist name="order" id="or">
                         <li>
                             <div class="ui-list-info ui-border-t">
@@ -53,14 +53,13 @@
                                     运单状态：{$or['status']}  <br/>
                                     站点：{$or['sitename']} <br/>
                                     到站时间：{$or['sitetime']} <br/>
-                                   <!-- 操作:<a  href="{:U('App/Bind/driveRoute')}/cardriveid/{$or['cardriveid']}">轨迹</a>-->
+                                   &lt;!&ndash; 操作:<a  href="{:U('App/Bind/driveRoute')}/cardriveid/{$or['cardriveid']}">轨迹</a>&ndash;&gt;
                                 </p>
                             </div>
                         </li>
-                    </volist>
-                </ul>
-                <!--  </ul>-->
-                <!-- </ul>-->
+                    </volist>-->
+
+                    </ul>
             </div>
         </div>
     </section>
@@ -69,16 +68,24 @@
 
 </section><!-- /.ui-container-->
 <script>
-    /* $(function(){
+     $(function(){
      query('01');//第一次加载
-     });*/
+     });
     function query(type)
     {
+        var receivername= $("#receivername").val();
+        var receivertel= $("#receivertel").val();
+        var shipper= $("#shipper").val();
+        var shippertel= $("#shippertel").val();
+        console.log(receivername+receivertel+shipper+shippertel);
         $.ajax({
-            url : "{:U('App/Bind/mySelectOrder')}",
+            url : "{:U('App/Bind/mySelectOrder1')}",
             data : {
                 pageNo : $("#pageNo").val(),
-                receivername:$("receivername").val()
+                receivername:receivername,
+                receivertel:receivertel,
+                shipper:shipper,
+                shippertel:shippertel
             },
             cache : false,
             success : function(data)
@@ -100,7 +107,7 @@
                             content = content
                                     + ' <li> <div class="ui-list-info ui-border-t"><h4 class="ui-nowrap">订单编号' + data[i].orderno + '</h4>'
                                     + '<p class="ui-nowrap">收件人：' +data[i].receivername + '<br/>收件人电话：' + data[i].receivertel + '<br/>收件人地址：'
-                                    + data[i].receiveraddress +'<br/>运单状态： '+data[i].status+'<br/>操作:<a  href="'+url+'">轨迹</a>'+ '</p></div>';
+                                    + data[i].receiveraddress +'<br/>件数：'+data[i].goodscount+'<br/>托运时间：'+data[i].createdate+'<br/>运单状态：'+data[i].status+'<br/>站点：'+data[i].sitename+'<br/>到站时间：'+ data[i].sitetime+'</p></div>';
                         }
                         $(".trade-area").append(content);
                     }
@@ -114,11 +121,8 @@
 
                         content = content
                                 + ' <li> <div class="ui-list-info ui-border-t"><h4 class="ui-nowrap">订单编号' + data[i].orderno + '</h4>'
-                                + '<p class="ui-nowrap">收件人：' +data[i].receivername + '<br/>收件人电话：' + data[i].receivertel + '<br/>收件人地址：'
-                                + data[i].receiveraddress +'<br/>运单状态： '+data[i].status+'<br/>操作:<a  href="'+url+'">轨迹</a>'+ '</p></div>';
-
-
-
+                                + '<p class="ui-nowrap">收件人：'+data[i].receivername + '<br/>收件人电话：' + data[i].receivertel + '<br/>收件人地址：'
+                                + data[i].receiveraddress +'<br/>件数：'+data[i].goodscount+'<br/>托运时间：'+data[i].createdate+'<br/>运单状态：'+data[i].status+'<br/>站点：'+data[i].sitename+'<br/>到站时间：'+ data[i].sitetime+'</p></div>';
                     }
                     $(".trade-area").append(content);
 
