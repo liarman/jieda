@@ -87,7 +87,7 @@ class CardriveController extends AdminBaseController{
                     o.status=1 and
                      o.endcity = '$routeid'
                     AND o.cardriveid ='$cardriveid'";
-             //   $sql = "select o.* from qfant_order as o ,qfant_cardrive as cd ,qfant_cardriveroute as cdr where o.endcity=cdr.routeid AND cd.id=cdr.cardriveid and o.cardriveid=cd.id  and o.endcity='$routeid' and o.cardriveid='$cardriveid'";
+                //   $sql = "select o.* from qfant_order as o ,qfant_cardrive as cd ,qfant_cardriveroute as cdr where o.endcity=cdr.routeid AND cd.id=cdr.cardriveid and o.cardriveid=cd.id  and o.endcity='$routeid' and o.cardriveid='$cardriveid'";
                 $d=D('Order')->query($sql,"");
                 if($d){//设置订单已到站
                     $order['status']='2';
@@ -103,7 +103,7 @@ class CardriveController extends AdminBaseController{
 
                 }
                 //没有到站的也要添加站点
-               // $sql1 = "select o.* from qfant_order as o ,qfant_cardrive as cd ,qfant_cardriveroute as cdr where o.endcity=cdr.routeid AND cd.id=cdr.cardriveid and o.cardriveid=cd.id  and o.endcity<>'$routeid' and o.cardriveid='$cardriveid'";
+                // $sql1 = "select o.* from qfant_order as o ,qfant_cardrive as cd ,qfant_cardriveroute as cdr where o.endcity=cdr.routeid AND cd.id=cdr.cardriveid and o.cardriveid=cd.id  and o.endcity<>'$routeid' and o.cardriveid='$cardriveid'";
                 $sql1="SELECT
                         o.*
                     FROM
@@ -162,7 +162,7 @@ class CardriveController extends AdminBaseController{
         $this->ajaxReturn($message,'JSON');
     }
 
-   /**
+    /**
      * 编辑
      */
     public function editCardrive(){
@@ -192,7 +192,23 @@ class CardriveController extends AdminBaseController{
         $data['routeid']=I('post.routeid');
         $data['arrivedate']=strtotime(I('post.arrivedate'));
         $where['id']=$id;
-        $result=D('Cardriveroute')->editData($where,$data);
+        $result=D('Cardriveroute')->editData($where,$data);//站点修改，运单的站点也要跟着修改
+        //1.根据站点的主键id，查询cardriveid
+        //然后查找到这个发车所有运单（已到站的除外），然后跟修改站点以及到站时间
+        $Cdata=D('Cardriveroute')->where(array('id'=>$id))->find();
+        if($Cdata['cardriveid']){
+            $Dodata=D('Driverorder')->where(array('cardriveid'=>$Cdata['cardriveid']))->select();
+            if($Dodata){
+                $order['site']=I('post.routeid');
+                $order['sitetime']=strtotime(I('post.arrivedate'));
+                for($i = 0; $i <sizeof($Dodata); $i++)
+                {
+                    $where['id']=$Dodata[$i]['orderid'];
+                    D('Order')->editData($where,$order);
+                }
+
+            }
+        }
         if($result){
             $message['status']=1;
             $message['message']='保存成功';
@@ -210,6 +226,23 @@ class CardriveController extends AdminBaseController{
         $map=array(
             'id'=>$id
         );
+        //删除站点，删除订单的站点以及到站时间
+        //1.根据站点主键id，查找发车的id，cardriveid
+        //2.根据cardriveid找到该发车的里面的运单，然后运单的站点、时间跟着删除
+        $odata=D('Cardriveroute')->where(array('id'=>$id))->find();
+        if($odata['cardriveid']){
+            $Dodata=D('Driverorder')->where(array('cardriveid'=>$odata['cardriveid']))->select();
+            if($Dodata){
+                $order['site']=0;
+                $order['sitetime']="";
+                for($i = 0; $i <sizeof($Dodata); $i++)
+                {
+                    $where['id']=$Dodata[$i]['orderid'];
+                    D('Order')->editData($where,$order);
+                }
+
+            }
+        }
         $result=D('Cardriveroute')->deleteData($map);
         if($result){
             $message['status']=1;
@@ -283,7 +316,7 @@ class CardriveController extends AdminBaseController{
         $result['total']=$data[0]['total'];
         $data=D('Cardrive')->query($sql,$param);
         foreach ($data as $key=>$basevalue){
-                $data[$key]['orderid']= $orderid;
+            $data[$key]['orderid']= $orderid;
         }
         $result["rows"] = $data;
         $this->ajaxReturn($result,'JSON');
