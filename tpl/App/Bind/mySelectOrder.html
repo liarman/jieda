@@ -34,10 +34,10 @@
                 <!-- <ul class="ui-list ui-list-pure ui-border-tb trade-area">-->
                 <ul class="ui-list ui-list-function  ui-border-tb trade-area">
 
-                      <input type="hidden" name="receivername" id="receivername" value="{$data['receivername']}" />
-                      <input type="hidden" name="receivertel" id="receivertel" value="{$data['receivertel']}" />
+                      <input type="hidden" name="orderno" id="orderno" value="{$data['orderno']}" />
+                    <!--  <input type="hidden" name="receivertel" id="receivertel" value="{$data['receivertel']}" />
                       <input type="hidden" name="shipper" id="shipper" value="{$data['shipper']}" />
-                      <input type="hidden" name="shippertel" id="shippertel" value="{$data['shippertel']}" />
+                      <input type="hidden" name="shippertel" id="shippertel" value="{$data['shippertel']}" />-->
 
 <!--
                     <volist name="order" id="or">
@@ -73,19 +73,16 @@
      });
     function query(type)
     {
-        var receivername= $("#receivername").val();
-        var receivertel= $("#receivertel").val();
+        var orderno= $("#orderno").val();
+        /*var receivertel= $("#receivertel").val();
         var shipper= $("#shipper").val();
-        var shippertel= $("#shippertel").val();
-        console.log(receivername+receivertel+shipper+shippertel);
+        var shippertel= $("#shippertel").val();*/
+        //console.log(receivername+receivertel+shipper+shippertel);
         $.ajax({
             url : "{:U('App/Bind/mySelectOrder1')}",
             data : {
                 pageNo : $("#pageNo").val(),
-                receivername:receivername,
-                receivertel:receivertel,
-                shipper:shipper,
-                shippertel:shippertel
+                orderno:orderno
             },
             cache : false,
             success : function(data)
