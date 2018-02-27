@@ -368,8 +368,8 @@ function print1(id){
             LODOP.ADD_PRINT_TEXT(260,155,79,47,data[0].goodsweight+goodsunit);//重量
             LODOP.ADD_PRINT_TEXT(270,300,104,25,data[0].goodsinsurance);//保险金额
             LODOP.ADD_PRINT_TEXT(270,480,72,28,data[0].insurance);//保险费
-              LODOP.ADD_PRINT_TEXT(310,460,300,28,data[0].countfee);//合计金额.rmb
-            // LODOP.ADD_PRINT_TEXT(310,460,72,28,data[0].countfee);//合计金额
+              LODOP.ADD_PRINT_TEXT(310,50,300,28,data[0].countfee);//合计金额.rmb大写
+            LODOP.ADD_PRINT_TEXT(310,460,72,28,data[0].smallcountfee);//合计金额小写
             if (data[0].paytype=="1"){
                 paytype="欠付";
             }else if (data[0].paytype=="2") {
