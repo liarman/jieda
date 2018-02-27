@@ -304,10 +304,10 @@ class BindController extends  WapController{
 		$this->ajaxReturn($message,'JSON');
 	}
 public function mySelectOrder(){
-	$data['receivername']=I("get.receivername");
-	$data['receivertel']=I("get.receivertel");
+	$data['orderno']=I("get.orderno");
+	/*$data['receivertel']=I("get.receivertel");
 	$data['shipper']=I("get.shipper");
-	$data['shippertel']=I("get.shippertel");
+	$data['shippertel']=I("get.shippertel");*/
 	$this->assign("data",$data);
 	$this->display();
 }
@@ -318,10 +318,10 @@ public function mySelectOrder(){
 		}
 		$rows = 10;
 		$offset = ($pageNo-1)*$rows;
-		$receivername=I("get.receivername");
-		$receivertel=I("get.receivertel");
+		$orderno=I("get.orderno");
+		/*$receivertel=I("get.receivertel");
 		$shipper=I("get.shipper");
-		$shippertel=I("get.shippertel");
+		$shippertel=I("get.shippertel");*/
 		//$sql1="SELECT	o.* ,c.driver as driver ,r.name as endcityname ,cd.number as number,cd.startdate as startdate FROM	qfant_order o left join qfant_cardrive cd on o.cardriveid=cd.id	LEFT JOIN qfant_route r on r.id=o.endcity LEFT JOIN qfant_car  c on c.id=cd.carid where 1=1";
 		$sql="SELECT
             o.*,
@@ -339,9 +339,9 @@ public function mySelectOrder(){
         WHERE
             1 = 1 ";
 		$param=array();
-		if(!empty($receivername)){
-			$sql.=" and o.receivername ='%s'";
-			array_push($param,$receivername);
+		if(!empty($orderno)){
+			$sql.=" and o.orderno ='%s'";
+			array_push($param,$orderno);
 		}
 		if(!empty($receivertel)){
 			$sql.=" and o.receivertel ='%s'";
