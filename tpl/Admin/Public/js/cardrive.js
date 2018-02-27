@@ -5,7 +5,73 @@ function addCardrive(){
 
     url= addCardriveUrl ;
 }
+function addarrive(row){
+    $('#addarrive').dialog('open').dialog('setTitle','添加');
+    $('#addarriveForm').form('clear');
+    $('#route').combobox({});
+    $('#addarrive_id').val(row.id);
+    $('#cardrive_id').val(row.cardriveid);
+    url= addarriveUrl;
+}
+function  editarrive(){
+    var row = $('#arriveGrid').datagrid('getSelected');
+    var  time=  row.arrivedate;
+    time=timeStatus(time);
+    if(row==null){
+        $.messager.alert('Warning',"请选择要编辑的行", 'info');return false;
+    }
+    if (row){
+        $('#editarrive').dialog('open').dialog('setTitle','编辑');
+        $('#editarriveForm').form('load',row);
+        $('#editarrivetime').datetimebox('setValue', time);
+        url = editarriveUrl +'/id/'+row.cdid;
+    }
+}
 
+function deletearrive(){
+    var row = $('#arriveGrid').datagrid('getSelected');
+    if(row==null){
+        $.messager.alert('Warning',"请选择要删除的行", 'info');return false;
+    }
+    if (row){
+        $.messager.confirm('删除提示','真的要删除?',function(r){
+            if (r){
+                var durl=deletearriveUrl;
+                $.getJSON(durl,{id:row.cdid},function(result){
+                    if (result.status){
+                        $('#arriveGrid').datagrid('reload');    // reload the user data
+                    } else {
+                        $.messager.alert('错误提示',result.message,'error');
+                    }
+                },'json').error(function(data){
+                    var info=eval('('+data.responseText+')');
+                    $.messager.confirm('错误提示',info.message,function(r){});
+                });
+            }
+        });
+    }
+}
+
+function  editarriveSubmit(){
+    $('#editarriveForm').form('submit',{
+        url: url,
+        onSubmit: function(){
+            return $(this).form('validate');
+        },
+        success:function(data){
+            data=$.parseJSON(data);
+            if(data.status==1){
+                $.messager.alert('Info', data.message, 'info');
+                $('#editarrive').dialog('close');
+                $('#arriveGrid').datagrid('reload');
+            }else {
+                $.messager.alert('Warning', data.message, 'info');
+                $('#editarrive').dialog('close');
+                $('#arriveGrid').datagrid('reload');
+            }
+        }
+    });
+}
 function addCardriveSubmit(){
     $('#addCardriveForm').form('submit',{
         url: url,
@@ -105,13 +171,21 @@ function cararrive(){
     $('#arriveGrid').datagrid({
         url: addarriveListUrl +'/cardriveid/'+row.cardriveid,
         columns:[[
+            {field:'cdid',title:'站点id',width:100,align:'center',hidden:'true'},
             {field:'name',title:'到达地',width:100,align:'center'},
             {field:'arrivedate',title:'到达时间',width:270,align:'center',formatter:Common.TimeFormatter}
         ]],
         toolbar: [{
             iconCls: 'fa fa-plus',
             handler: function(){addarrive(row);}
-        }]
+        },{
+            iconCls: 'fa fa-edit',
+            handler: function(){editarrive();}
+        },
+            {
+                iconCls: 'fa fa-remove',
+                handler: function(){deletearrive();}
+            }]
     });
 }
 function orderList(){
@@ -233,14 +307,7 @@ function  EndCitySubmit(){
         }
     });
 }
-function addarrive(row){
-    $('#addarrive').dialog('open').dialog('setTitle','添加');
-    $('#addarriveForm').form('clear');
-    $('#route').combobox({});
-    $('#addarrive_id').val(row.id);
-    $('#cardrive_id').val(row.cardriveid);
-    url= addarriveUrl;
-}
+
 function addarriveSubmit(){
     $('#addarriveForm').form('submit',{
         url: addarriveUrl,

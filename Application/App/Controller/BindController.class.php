@@ -6,7 +6,7 @@ use Common\Controller\WapController;
  */
 class BindController extends  WapController{
 	 public function _initialize() {
-         parent::_initialize();
+         //parent::_initialize();
          $this->assign('staticFilePath',str_replace('./','/',StaticFilePath.'Static'));
      }
 	public  function bind(){
@@ -303,51 +303,88 @@ class BindController extends  WapController{
 		}
 		$this->ajaxReturn($message,'JSON');
 	}
-
-	public  function  mySelectOrder(){
+public function mySelectOrder(){
+	$data['orderno']=I("get.orderno");
+	/*$data['receivertel']=I("get.receivertel");
+	$data['shipper']=I("get.shipper");
+	$data['shippertel']=I("get.shippertel");*/
+	$this->assign("data",$data);
+	$this->display();
+}
+	public  function  mySelectOrder1(){
 		$pageNo = I("get.pageNo");
 		if($pageNo==0){
 			$pageNo =1;
 		}
 		$rows = 10;
 		$offset = ($pageNo-1)*$rows;
-		$receivername=I("get.receivername");
-		$receivertel=I("get.receivertel");
+		$orderno=I("get.orderno");
+		/*$receivertel=I("get.receivertel");
 		$shipper=I("get.shipper");
-		$shippertel=I("get.shippertel");
-		$sql="SELECT	o.* ,c.driver as driver ,r.name as endcityname ,cd.number as number,cd.startdate as startdate FROM	qfant_order o left join qfant_cardrive cd on o.cardriveid=cd.id	LEFT JOIN qfant_route r on r.id=o.endcity LEFT JOIN qfant_car  c on c.id=cd.carid where 1=1";
+		$shippertel=I("get.shippertel");*/
+		//$sql1="SELECT	o.* ,c.driver as driver ,r.name as endcityname ,cd.number as number,cd.startdate as startdate FROM	qfant_order o left join qfant_cardrive cd on o.cardriveid=cd.id	LEFT JOIN qfant_route r on r.id=o.endcity LEFT JOIN qfant_car  c on c.id=cd.carid where 1=1";
+		$sql="SELECT
+            o.*,
+            c.driver AS driver,
+            r. NAME AS endcityname,
+            r1.name as sitename,
+            cd.number AS number,
+            cd.startdate AS startdate
+        FROM
+            qfant_order o
+        LEFT JOIN qfant_cardrive cd ON o.cardriveid = cd.id
+        LEFT JOIN qfant_route r ON r.id = o.endcity
+        LEFT JOIN qfant_route r1 ON r1.id = o.site
+        LEFT JOIN qfant_car c ON c.id = cd.carid
+        WHERE
+            1 = 1 ";
 		$param=array();
-		if(!empty($receivername)){
-			$sql.=" and o.receivername like '%s'";
-			array_push($param,'%'.$receivername.'%');
+		if(!empty($orderno)){
+			$sql.=" and o.orderno ='%s'";
+			array_push($param,$orderno);
 		}
 		if(!empty($receivertel)){
-			$sql.=" and o.receivertel like '%s'";
-			array_push($param,'%'.$receivertel.'%');
+			$sql.=" and o.receivertel ='%s'";
+			array_push($param,$receivertel);
 		}
 		if(!empty($shipper)){
-			$sql.=" and o.shipper like '%s'";
-			array_push($param,'%'.$shipper.'%');
+			$sql.=" and o.shipper ='%s'";
+			array_push($param,$shipper);
 		}
 		if(!empty($shippertel)){
-			$sql.=" and o.shippertel like '%s'";
-			array_push($param,'%'.$shippertel.'%');
+			$sql.=" and o.shippertel ='%s'";
+			array_push($param,$shippertel);
 		}
 		$sql.=" order by o.createdate desc,o.id desc  limit %d,%d ";
 		array_push($param,$offset);
 		array_push($param,$rows);
 		$data=D('Order')->query($sql,$param);
 		foreach ($data as $key=>$basevalue){
-			if($basevalue['status']=='0'){
+			if($basevalue['createdate']==null||$basevalue['createdate']==0){
+				$data[$key]['createdate']=" ";
+			}else{
+				$data[$key]['createdate']=date('Y-m-d' , $basevalue['createdate']) ;//托运时间
+			}
+			if($basevalue['sitetime']==null||$basevalue['sitetime']==0){
+				$data[$key]['sitetime']=" ";
+			}else{
+				$data[$key]['sitetime']=date('Y-m-d' , $basevalue['sitetime']) ;//到站时间
+			}
+
+			if($basevalue['sitename']==null){
+				$data[$key]['sitename']=" ";
+			}
+		/*	if($basevalue['status']=='0'){
 				$data[$key]['status']='已提交订单';
 			}else if($basevalue['status']=='1'){
 				$data[$key]['status']='已装车';
 			}else{
 				$data[$key]['status']='已到站';
-			}
+			}*/
 		}
-		$this->assign("order",$data);
-		$this->display();
+		/*$this->assign("order",$data);
+		$this->display();*/
+		$this->ajaxReturn($data,'JSON');
 
 	}
 }

@@ -22,28 +22,28 @@
         <form id="sendFrom">
             <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label>
-                    发件人姓名
+                    运单编号
                 </label>
-                <input type="text" id="shipper" name="shipper" placeholder="请输入收件人姓名" value="">
+                <input type="text" id="orderno" name="orderno" placeholder="请输入运单编号" value="">
             </div>
-            <div class="ui-form-item ui-form-item-l ui-border-b">
+           <!-- <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label>
                     发件人电话
                 </label>
                 <input type="text" id= "shippertel" name="shippertel" placeholder="请输入收件人电话" value="">
-            </div>
-            <div class="ui-form-item ui-form-item-l ui-border-b">
+            </div>-->
+           <!-- <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label>
                     收件人姓名
                 </label>
                 <input type="text" id="receivername" name="receivername" placeholder="请输入收件人姓名" value="">
-            </div>
-            <div class="ui-form-item ui-form-item-l ui-border-b">
+            </div>-->
+          <!--  <div class="ui-form-item ui-form-item-l ui-border-b">
                 <label>
                     收件人电话
                 </label>
                 <input type="text" id= "receivertel" name="receivertel" placeholder="请输入收件人电话" value="">
-            </div>
+            </div>-->
 
         </form>
     </div>
@@ -53,11 +53,11 @@
         </button>
     </div>
 
-    <div class="ui-btn-wrap">
+  <!--  <div class="ui-btn-wrap">
         <button class="ui-btn-lg ui-btn-primary" id="cancel">
             取消
         </button>
-    </div>
+    </div>-->
 </section>
 
 <script>
@@ -69,23 +69,24 @@
 
 
      $("#sendFormSelect").on("click",function(){
-         var receivername=$('#receivername').val();
+        /* var receivername=$('#receivername').val();
          var receivertel=$('#receivertel').val();
-         var shipper=$('#shipper').val();
-         var shippertel=$('#shippertel').val();
-         if(receivername==""&&receivertel==""&&shipper==""&&shippertel==""){
+         var shipper=$('#shipper').val();*/
+         var orderno=$('#orderno').val();
+         if(orderno==""){
              alert('查询条件不能为空');
              return false;
          }
-         location.href = '{:U("App/Bind/mySelectOrder")}?receivername='+receivername+'&receivertel='+receivertel+'&shipper='+shipper+'&shippertel='+shippertel;
+      //   location.href = '{:U("App/Bind/mySelectOrder")}?receivername='+receivername+'&receivertel='+receivertel+'&shipper='+shipper+'&shippertel='+shippertel;
+         location.href = '{:U("App/Bind/mySelectOrder")}?orderno='+orderno;
          //  location.href= "{:U('App/Bind/mySelectOrder',array('receivername'=>receivername,'receivertel'=>receivertel,'shipper'=>shipper,'shippertel'=>shippertel))}";
 
      });
     $("#cancel").on("click",function(){
-        $('#receivername').val("");
-        $('#receivertel').val("");
+        $('#orderno').val("");
+        /*$('#receivertel').val("");
         $('#shipper').val("");
-        $('#shippertel').val("");
+        $('#shippertel').val("");*/
     });
 </script>
 </body>
