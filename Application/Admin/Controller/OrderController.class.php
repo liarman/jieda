@@ -136,7 +136,8 @@ class OrderController extends AdminBaseController{
         else{
             $data[0]['createdate']=date('Y-m-d ' , $data[0]['createdate'] ) ;
         }
-        $data[0]['countfee'] = $this->cny($data[0]['countfee']);
+        $data[0]['smallcountfee'] = $data[0]['countfee'];//小写
+        $data[0]['countfee'] = $this->cny($data[0]['countfee']);//大写
 
 
 
