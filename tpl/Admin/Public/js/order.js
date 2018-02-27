@@ -345,7 +345,7 @@ function print1(id){
             var LODOP=getLodop(document.getElementById('LODOP'),document.getElementById('LODOP_EM'));
             LODOP.PRINT_INIT("");
             LODOP.SET_PRINT_STYLE("FontSize",12);
-            LODOP.ADD_PRINT_TEXT(110,40,200,27,data[0].assembledate);//打印时间
+            LODOP.ADD_PRINT_TEXT(110,40,200,27,data[0].createdate);//打印时间
             LODOP.ADD_PRINT_TEXT(158,50,98,27,data[0].shipper);//托运人姓名
             // LODOP.ADD_PRINT_TEXT(186,413,110,24,data.printtime);//
             LODOP.ADD_PRINT_TEXT(150,435,115,25,data[0].shippertel);//电话
@@ -368,8 +368,8 @@ function print1(id){
             LODOP.ADD_PRINT_TEXT(260,155,79,47,data[0].goodsweight+goodsunit);//重量
             LODOP.ADD_PRINT_TEXT(270,300,104,25,data[0].goodsinsurance);//保险金额
             LODOP.ADD_PRINT_TEXT(270,480,72,28,data[0].insurance);//保险费
-            //  LODOP.ADD_PRINT_TEXT(310,50,300,28,data[0].countfee);//合计金额.rmb
-            LODOP.ADD_PRINT_TEXT(310,460,72,28,data[0].countfee);//合计金额
+              LODOP.ADD_PRINT_TEXT(310,460,300,28,data[0].countfee);//合计金额.rmb
+            // LODOP.ADD_PRINT_TEXT(310,460,72,28,data[0].countfee);//合计金额
             if (data[0].paytype=="1"){
                 paytype="欠付";
             }else if (data[0].paytype=="2") {
