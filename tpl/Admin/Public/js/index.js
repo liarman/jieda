@@ -127,7 +127,7 @@ function setinfo(){
         type:"post",
         url:setPwdUrl,
         success: function(result){
-            if(result.status) $.messager.confirm('提示消息','密码更新成功!',function(r){location.href=indexUrl;});
+            if(result.status) $.messager.confirm('提示消息','密码更新成功!',function(r){location.href=loginUrl;});
         }
     });
 }
