@@ -28,26 +28,28 @@ class UserController extends AdminBaseController{
 	 */
 	public function setPassword()
 	{
-		$id = I('post.id');
-		$password = I('post.password', '');
-		$password2 = I('post.password', '');
-		if ($password != $password2) {
-			$message['status'] = 0;
-			$message['message'] = '两次密码输入不一样';
-		} else {
-			$user = D('Users')->where(array('id' => $id))->find();
-			$password = md5($password);
-			$result = D('Users')->where(array('id' => $id))->save(array('password' => $password));
-			if ($result) {
-				$message['status'] = 1;
-				$message['message'] = '修改密码成功';
-			} else {
-				$message['status'] = 0;
-				$message['message'] = '修改密码失败';
+		$id=I('post.id');
+		$password=I('post.password','');
+		$password2=I('post.password','');
+		if($password!=$password2){
+			$message['status']=0;
+			$message['message']='两次密码输入不一样';
+		}else {
+			$user=D('Users')->where(array('id'=>$id))->find();
+			$password=md5($password);
+			$result=D('Users')->where(array('id'=>$id))->save(array('password'=>$password));
+			if($result){
+				$message['status']=1;
+				$message['message']='修改密码成功';
+			}else {
+				$message['status']=0;
+				$message['message']='修改密码失败';
 			}
 		}
 
-		$this->ajaxReturn($message, 'JSON');
-
+		$this->ajaxReturn($message,'JSON');
 	}
+
+
+
 }
