@@ -144,8 +144,6 @@ class OrderController extends AdminBaseController{
         $this->ajaxReturn($data,'JSON');
     }
 
-
-
     /**
      * 删除
      */
