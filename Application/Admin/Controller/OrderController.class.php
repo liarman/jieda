@@ -138,9 +138,6 @@ class OrderController extends AdminBaseController{
         }
         $data[0]['smallcountfee'] = $data[0]['countfee'];//小写
         $data[0]['countfee'] = $this->cny($data[0]['countfee']);//大写
-
-
-
         $this->ajaxReturn($data,'JSON');
     }
 
