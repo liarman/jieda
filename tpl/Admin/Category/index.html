@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>管理后台</title>
+    <script src="__EASYUI__/jquery.min.js"></script>
+    <script src="__EASYUI__/jquery.easyui.min.js"></script>
+    <script src="__EASYUI__/locale/easyui-lang-zh_CN.js"></script>
+    <link rel="stylesheet" href="__EASYUI__/super/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__EASYUI__/super/superRed.css" id="themeCss">
+    <script src="__EASYUI__/super/super.js"></script>
+    <script src="__ADMIN_JS__/index.js" type="text/javascript" charset="utf-8"></script>
+    <link href="__PUBLIC__/statics/css/admin.css" rel="stylesheet" />
+    <script src="__EASYUI__/common.js"></script>
+    <script src="__EASYUI__/formatter.js"></script>
+    <script src="__EASYUI__/extend/validate.js"></script>
+    <script src="__KINDEDITOR__/kindeditor-all.js"></script>
+    <script src="__KINDEDITOR__/lang/zh-CN.js"></script>
+
+</head>
+<body style="padding: 0">
+<div id='Loading'><image src='__PUBLIC_IMAGES__/loading.gif'/>加载中....</div>
+<script src="__ADMIN_JS__/category.js" type="text/javascript" charset="utf-8"></script>
+<table id="categoryGrid" class="easyui-datagrid"  url="{:U('Admin/Category/ajaxCategoryList')}" pagination="true"  toolbar="#toolbar_cate" singleSelect="true" rownumbers="true" idField="id" treeField="name">
+    <thead>
+    <tr>
+        <th field="name" width="200" >名称</th>
+        <th field="imgurl" width="200" formatter="imgFormatter">图片地址</th>
+        <th field="norm" width="200"   formatter="normStatus">规格</th>
+        <th field="color" width="200"   formatter="colorStatus">产品外观</th>
+        <th field="sort" width="200" >排序</th>
+        <th field="recommend" width="200" formatter="formatRecommend">首页推荐</th>
+        <th data-options="field:'_operate',width:400,align:'center',formatter:formatOper">操作</th>
+    </tr>
+    </thead>
+</table>
+<div id="toolbar_cate">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" plain="true" onclick="addCategory()">添加</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-edit" plain="true" onclick="editCategory()">编辑</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-list-ol" plain="true" onclick="listChild()">子类</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-remove" plain="true" onclick="destroyCategory()">删除</a>
+</div>
+<div id="childDlg" class="easyui-dialog" title="子类列表" style="width:600px;padding:10px 20px;height: 400px" closed="true" modal="true">
+    <div id="CaChildGrid" style=""></div>
+    </div>
+<!-- 添加 -->
+<div id="addCategory" class="easyui-dialog" title="添加" style="width:500px;padding:10px 20px;" closed="true" modal="true">
+    <form id="addCategoryForm" method="post">
+        <table>
+            <tr>
+                <td>标题:</td>
+                <td><input name="name" class="easyui-textbox" data-options="delay:1000,required:true,height:30" /></td>
+            </tr>
+           <tr>
+                <td>上级分类:</td>
+                <td>
+                    <input id="pid" name="pid" url="{:U('Admin/Category/categoryLevel',array('pid'=>0))}" valueField="id" textField="name">
+                </td>
+            </tr>
+            <tr>
+                <td>图片:</td>
+                <td><input name="imgurl" class="easyui-textbox addimg" data-options="delay:1000,height:30"  />
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" id="addcategoryimg" style="width:90px">上传</a>
+                </td>
+            </tr>
+
+            <tr>
+                <td>分类规格:</td>
+                <td><input name="norm" class="easyui-textbox" data-options="delay:1000,height:30" /></td>
+            </tr>
+            <tr>
+                <td>产品外观:</td>
+                <td><input name="color" class="easyui-textbox" data-options="delay:1000,height:30" /></td>
+            </tr>
+            <tr>
+                <td>排序:</td>
+                <td><input name="sort" class="easyui-numberbox" data-options="delay:1000,height:30" value="0"/></td>
+            </tr>
+            <tr>
+                <td>首页推荐:</td>
+                <td><input type="checkbox" name="recommend" value="1" class="easyui-checkbox"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-check" onclick="addCategorySubmit()" style="width:90px">保存</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-remove" onclick="javascript:$('#addCategory').dialog('close')" style="width:90px">取消</a></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+<div id="editCategory" class="easyui-dialog" title="编辑" style="width:500px;padding:10px 20px;" closed="true" modal="true">
+    <form id="editCategoryForm" method="post">
+        <input type="hidden" name="id" value="">
+        <table>
+            <tr>
+                <td>标题:</td>
+                <td><input name="name" class="easyui-textbox" data-options="delay:1000,required:true,height:30" /></td>
+            </tr>
+           <tr>
+                <td>上级菜单:</td>
+                <td>
+                    <input name="pid" class="easyui-combobox pidedit" valueField="id" textField="name" >
+                </td>
+            </tr>
+            <tr>
+                <td>图片:</td>
+                <td><input name="imgurl" class="easyui-textbox editimg" data-options="delay:1000,height:30"  />
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" id="editcategoryimg" style="width:90px">上传</a>
+                </td>
+            </tr>
+            <tr>
+                <td>分类规格:</td>
+                <td><input name="norm" class="easyui-textbox" data-options="delay:1000,height:30" /></td>
+            </tr>
+            <tr>
+                <td>产品外观:</td>
+                <td><input name="color" class="easyui-textbox" data-options="delay:1000,height:30" /></td>
+            </tr>
+            <tr>
+                <td>排序:</td>
+                <td><input name="sort" class="easyui-numberbox" data-options="delay:1000,height:30" value="0"/></td>
+            </tr>
+            <tr>
+                <td>特别推荐:</td>
+                <td><input type="checkbox" name="recommend" value="1" class="easyui-checkbox editcategoryCheckbox"/></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-check" onclick="editCategorySubmit()" style="width:90px">保存</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-remove" onclick="javascript:$('#editCategory').dialog('close')" style="width:90px">取消</a></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+
+<div id="normDlg" class="easyui-dialog"  style="width:750px;padding:10px 20px;height: 400px" closed="true" modal="true">
+    <input type="hidden" class="easyui-textbox" id="norm" name="norm" value="">
+    <input type="hidden" class="easyui-textbox" id="catid" name="catid" value="">
+    <div id="normlistGrid" style="" pagination="true"   singleSelect="true" rownumbers="true"  toolbar="#toolbar_colorGrid">
+        <div id="toolbar_colorGrid">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" plain="true" onclick="addNorm()">添加</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-edit" plain="true" onclick="editNorm()">编辑</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-remove" plain="true" onclick="destroyNorm()">删除</a>
+          </div>
+    </div>
+</div>
+
+<div id="colorDlg" class="easyui-dialog"  style="width:750px;padding:10px 20px;height: 400px" closed="true" modal="true">
+    <input type="hidden" class="easyui-textbox" id="color" name="norm" value="">
+    <input type="hidden" class="easyui-textbox" id="colorcatid" name="catid" value="">
+    <div id="colorlistGrid" style="" pagination="true"   singleSelect="true" rownumbers="true"  toolbar="#toolbar_normGrid">
+        <div id="toolbar_normGrid">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" plain="true" onclick="addColor()">添加</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-edit" plain="true" onclick="editColor()">编辑</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-remove" plain="true" onclick="destroyColor()">删除</a>
+        </div>
+    </div>
+</div>
+
+<div id="addNorm" class="easyui-dialog" title="添加" style="width:500px;padding:10px 20px;" closed="true" modal="true">
+    <form id="addNormForm" method="post">
+        <input name="type" class="easyui-textbox" value="0" type="hidden" data-options="delay:1000,height:30" />
+        <input name="catid" id="catid1" class="easyui-textbox" type="hidden" data-options="delay:1000,height:30" />
+        <table>
+            <tr>
+                <td>规格名称:</td>
+                <td><input name="name" id ="normName" class="easyui-textbox" data-options="delay:1000,required:true,height:30" /></td>
+            </tr>
+
+            <tr>
+                <td>规格属性值:</td>
+                <td><input name="value" class="easyui-textbox" data-options="delay:1000,height:30" /></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td><a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-check" onclick="addNormSubmit()" style="width:90px">保存</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-remove" onclick="javascript:$('#addNorm').dialog('close')" style="width:90px">取消</a></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+
+
+<div id="editNorm" class="easyui-dialog" title="编辑" style="width:500px;padding:10px 20px;" closed="true" modal="true">
+    <form id="editNormForm"  method="post">
+        <input type="hidden"  class="easyui-textbox"  name="id" >
+        <input name="type" class="easyui-textbox" value="0" type="hidden" data-options="delay:1000,height:30" />
+        <input name="catid" id="catid2" class="easyui-textbox" type="hidden" data-options="delay:1000,height:30" />
+        <table>
+            <tr>
+                <td>规格名称:</td>
+                <td><input name="normName" id ="editnormName" class="easyui-textbox" data-options="delay:1000,required:true,height:30" /></td>
+            </tr>
+
+            <tr>
+                <td>规格属性值:</td>
+                <td><input name="value" class="easyui-textbox" data-options="delay:1000,height:30" /></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td><a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-check" onclick="editNormSubmit()" style="width:90px">保存</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-remove" onclick="javascript:$('#editNorm').dialog('close')" style="width:90px">取消</a></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+
+<div id="addColor" class="easyui-dialog" title="添加" style="width:500px;padding:10px 20px;" closed="true" modal="true">
+    <form id="addColorForm" method="post">
+        <input name="type" class="easyui-textbox" id="colortypecolor" value="1" type="hidden" data-options="delay:1000,height:30" />
+        <input name="catid" id="colorcatid1" class="easyui-textbox" type="hidden" data-options="delay:1000,height:30" />
+        <table>
+            <tr>
+                <td>外观名称:</td>
+                <td><input name="name" id ="addColorName" class="easyui-textbox" data-options="delay:1000,required:true,height:30" /></td>
+            </tr>
+
+            <tr>
+                <td>外观属性值:</td>
+                <td><input name="value" class="easyui-textbox" data-options="delay:1000,height:30" /></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td><a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-check" onclick="addColorSubmit()" style="width:90px">保存</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-remove" onclick="javascript:$('#addColor').dialog('close')" style="width:90px">取消</a></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+
+<div id="editColor" class="easyui-dialog" title="编辑" style="width:500px;padding:10px 20px;" closed="true" modal="true">
+    <form id="editColorForm"  method="post">
+        <input type="hidden"  class="easyui-textbox"  name="id" >
+        <input name="type" class="easyui-textbox" value="1" id="colortypecolor1" type="hidden" data-options="delay:1000,height:30" />
+        <input name="catid" id="colorcatid2" class="easyui-textbox" type="hidden" data-options="delay:1000,height:30" />
+        <table>
+            <tr>
+                <td>规格名称:</td>
+                <td><input name="normName" id ="editcolorName" class="easyui-textbox" data-options="delay:1000,required:true,height:30" /></td>
+            </tr>
+
+            <tr>
+                <td>规格属性值:</td>
+                <td><input name="value" class="easyui-textbox" data-options="delay:1000,height:30" /></td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td><a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-check" onclick="editColorSubmit()" style="width:90px">保存</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-remove" onclick="javascript:$('#editColor').dialog('close')" style="width:90px">取消</a></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
+<div class="imgdlg"><img class="simg"></div>
+<script type="text/javascript">
+    var GLOBALUrl= "{:C('GLOBAL_PIC_URL')}";
+    var addUrl= "{:U('Admin/Category/add')}";
+    var editUrl= "{:U('Admin/Category/edit')}";
+    var deleteUrl= "{:U('Admin/Category/delete')}";
+    var categoryLevelUrl= "{:U('Admin/Category/categoryLevel',array('pid'=>0))}";
+    var ajaxChildUrl = "{:U('Admin/Category/ajaxchildList')}";
+    var looknormUrl = "{:U('Admin/CategoryNorm/cateNormByCatId')}";
+    var addNormUrl = "{:U('Admin/CategoryNorm/add')}";
+    var editNormUrl = "{:U('Admin/CategoryNorm/edit')}";
+    var deleteNormUrl = "{:U('Admin/CategoryNorm/delete')}";
+</script>
+</body>
+</html>
