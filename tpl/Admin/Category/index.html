@@ -135,7 +135,7 @@
     </form>
 </div>
 
-<div id="normDlg" class="easyui-dialog"  style="width:750px;padding:10px 20px;height: 400px" closed="true" modal="true">
+<div id="normDlg" class="easyui-dialog"  style="width:750px;padding:10px 20px;height: 500px" closed="true" modal="true">
     <input type="hidden" class="easyui-textbox" id="norm" name="norm" value="">
     <input type="hidden" class="easyui-textbox" id="catid" name="catid" value="">
     <div id="normlistGrid" style="" pagination="true"   singleSelect="true" rownumbers="true"  toolbar="#toolbar_colorGrid">
@@ -147,7 +147,7 @@
     </div>
 </div>
 
-<div id="colorDlg" class="easyui-dialog"  style="width:750px;padding:10px 20px;height: 400px" closed="true" modal="true">
+<div id="colorDlg" class="easyui-dialog"  style="width:750px;padding:10px 20px;height: 500px" closed="true" modal="true">
     <input type="hidden" class="easyui-textbox" id="color" name="norm" value="">
     <input type="hidden" class="easyui-textbox" id="colorcatid" name="catid" value="">
     <div id="colorlistGrid" style="" pagination="true"   singleSelect="true" rownumbers="true"  toolbar="#toolbar_normGrid">
@@ -155,6 +155,18 @@
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" plain="true" onclick="addColor()">添加</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-edit" plain="true" onclick="editColor()">编辑</a>
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-remove" plain="true" onclick="destroyColor()">删除</a>
+        </div>
+    </div>
+</div>
+
+<div id="productDlg" class="easyui-dialog"  style="width:750px;padding:10px 20px;height: 500px" closed="true" modal="true">
+    <input type="hidden" class="easyui-textbox" id="product" name="norm" value="">
+    <input type="hidden" class="easyui-textbox" id="productid" name="catid" value="">
+    <div id="productlistGrid" style="" pagination="true"   singleSelect="true" rownumbers="true"  toolbar="#toolbar_productGrid">
+        <div id="toolbar_productGrid">
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" plain="true" onclick="addProduct()">添加</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-edit" plain="true" onclick="editProduct()">编辑</a>
+            <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-remove" plain="true" onclick="destroyProduct()">删除</a>
         </div>
     </div>
 </div>
@@ -273,6 +285,7 @@
     var addNormUrl = "{:U('Admin/CategoryNorm/add')}";
     var editNormUrl = "{:U('Admin/CategoryNorm/edit')}";
     var deleteNormUrl = "{:U('Admin/CategoryNorm/delete')}";
+    var productListUrl = "{:U('Admin/Product/ajaxProductList')}";
 </script>
 </body>
 </html>
