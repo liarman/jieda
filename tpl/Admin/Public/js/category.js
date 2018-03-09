@@ -145,12 +145,26 @@ function listChild(){
 
 function formatOper(val,row,index){
 
-    var btn2 = '<a class="editcls" style="color:#666666"  onclick="catogy(\''+row.id+'\')" href="javascript:void(0)"> 分类属性管理 |  </a>';
+  /*  var btn2 = '<a class="editcls" style="color:#666666"  onclick="catogy(\''+row.id+'\')" href="javascript:void(0)"> 分类属性管理 |  </a>';*/
     var print = '<a class="editcls" style="color:#666666" onclick="product(\''+row.id+'\')" href="javascript:void(0)"> 商品管理  </a>';
-    var btnop = btn2+"   "+ print;
+    var btnop =  print;
     return btnop;
 }
 
+function  product(catid){
+    $('#productDlg').dialog('open').dialog('setTitle','商品列表');
+    $('#productlistGrid').datagrid({
+        url:productListUrl+'/catId/'+catid,
+        columns:[[
+            {field:'id',title:'id',width:30,hidden:"true"},
+            {field:'categoryname',title:'分类名称',width:80},
+            {field:'name',title:'名称',width:120},
+            {field:'price',title:'价格',width:110},
+            {field:'marketprice',title:'市场价格',width:110},
+            {field:'storage',title:'库存',width:110}
+        ]]
+    });
+}
 function normStatus(val,row,index){
 var  btn="";
     if(row.norm){
@@ -184,7 +198,7 @@ function  colorbtn( id,color){
         $('#colorlistGrid').datagrid({
             url:looknormUrl+'/catId/'+catid+'/type/'+type,
             columns:[[
-                {field:'id',title:'id',width:30},
+                {field:'id',title:'id',width:30,hidden:"true"},
                 {field:'name',title:'分类名称',width:80},
                 {field:'type',title:'类型',width:120,formatter:formatType},
                 {field:'value',title:'规格值',width:110}
@@ -204,7 +218,7 @@ function  normbtn( id,norm){
     $('#normlistGrid').datagrid({
         url:looknormUrl+'/catId/'+catid+'/type/'+type,
         columns:[[
-            {field:'id',title:'id',width:30},
+            {field:'id',title:'id',width:30,hidden:"true"},
             {field:'name',title:'分类名称',width:80},
             {field:'type',title:'类型',width:120,formatter:formatType},
             {field:'value',title:'规格值',width:110}
