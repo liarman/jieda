@@ -10,8 +10,15 @@ class ProductController extends AdminBaseController{
 		$rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
 		$offset = ($page-1)*$rows;
 		$name = I("post.name");
-        $countsql="select count(p.id) AS total from qfant_product p ,qfant_category c where 1=1 AND c.id=p.category_id";
-        $sql="select p.*, c.name AS categoryname,c.imgurl,c.sort,c.status AS categorystatus  from qfant_product p ,qfant_category c where 1=1 AND c.id= p.category_id";
+		$catid=I('get.catId');
+		//分类管理 查询商品
+		if($catid){
+			$countsql="select count(p.id) AS total from qfant_product p ,qfant_category c where 1=1 AND c.id=p.category_id and c.id='$catid'";
+			$sql="select p.*, c.name AS categoryname,c.imgurl,c.sort,c.status AS categorystatus  from qfant_product p ,qfant_category c where 1=1 AND c.id= p.category_id and c.id='$catid'";
+		}else{
+			$countsql="select count(p.id) AS total from qfant_product p ,qfant_category c where 1=1 AND c.id=p.category_id";
+			$sql="select p.*, c.name AS categoryname,c.imgurl,c.sort,c.status AS categorystatus  from qfant_product p ,qfant_category c where 1=1 AND c.id= p.category_id";
+		}
         $param=array();
 
 		if(!empty($name)){
@@ -29,6 +36,7 @@ class ProductController extends AdminBaseController{
         $result["rows"] = $data;
 		$this->ajaxReturn($result,'JSON');
 	}
+
 
     public function ajaxCategoryAll(){
         $data=D('Category')->select();
