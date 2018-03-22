@@ -65,11 +65,15 @@ class ProductController extends AdminBaseController{
 	 */
 	public function add(){
 		if(IS_POST){
+			$color = I('post.color');//colorId数组
+			$norm = I('post.norm');//normId数组
+			$catname = I('catname');//分类id
+			var_dump("norm:".$norm."@@@@color".$color);
 			$data['name']=I('post.name');
 			$data['pic1']=I('post.pic1');
 			$data['pic2']=I('post.pic2');
 			$data['pic3']=I('post.pic3');
-			$data['category_id']=I('post.category_id');
+			//$data['category_id']=I('post.category_id');
 			$data['price']=I('post.price');
 			$data['marketprice']=I('post.marketprice');
 			$data['storage']=I('post.storage');
@@ -101,7 +105,11 @@ class ProductController extends AdminBaseController{
 		$map=array(
 			'id'=>$id
 		);
+		$map1=array(
+			'product_id'=>$id
+		);
 		$result=D('Product')->deleteData($map);
+		$result1=D('ProductPrice')->deleteData($map1);
 		if($result){
 			$message['status']=1;
 			$message['message']='删除成功';

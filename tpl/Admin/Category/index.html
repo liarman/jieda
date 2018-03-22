@@ -21,6 +21,7 @@
 <body style="padding: 0">
 <div id='Loading'><image src='__PUBLIC_IMAGES__/loading.gif'/>加载中....</div>
 <script src="__ADMIN_JS__/category.js" type="text/javascript" charset="utf-8"></script>
+<script src="__ADMIN_JS__/product.js" type="text/javascript" charset="utf-8"></script>
 <table id="categoryGrid" class="easyui-datagrid"  url="{:U('Admin/Category/ajaxCategoryList')}" pagination="true"  toolbar="#toolbar_cate" singleSelect="true" rownumbers="true" idField="id" treeField="name">
     <thead>
     <tr>
@@ -160,8 +161,11 @@
 </div>
 
 <div id="productDlg" class="easyui-dialog"  style="width:750px;padding:10px 20px;height: 500px" closed="true" modal="true">
-    <input type="hidden" class="easyui-textbox" id="product" name="norm" value="">
-    <input type="hidden" class="easyui-textbox" id="productid" name="catid" value="">
+    <input type="text" class="easyui-textbox" id="catname" name="catname" value="">
+    <input type="hidden" class="easyui-textbox" id="pcatid" name="pcatid" value="">
+
+    <input type="type"  id="listcolorname" name="listcolorname" value="">
+    <input type="type"   id="listnormname" name="listnormname" value="">
     <div id="productlistGrid" style="" pagination="true"   singleSelect="true" rownumbers="true"  toolbar="#toolbar_productGrid">
         <div id="toolbar_productGrid">
             <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" plain="true" onclick="addProduct()">添加</a>
@@ -273,6 +277,148 @@
 
     </form>
 </div>
+
+<div id="addProduct" class="easyui-dialog" title="添加" style="width:800px;height:700px;padding:10px 20px;" closed="true" modal="true">
+    <form id="addProductForm" method="post">
+        <table>
+            <tbody>
+            <tr>
+                <td>标题:</td>
+                <td><input name="name" class="easyui-textbox"  data-options="delay:1000,required:true,height:30" /></td>
+            </tr>
+            <tr>
+                <td>分类:</td>
+                <td><input name="catname" class="easyui-textbox" id="addProductCatname" data-options="delay:1000,required:true,height:30" /></td>
+                <input name="catname" type="hidden" id="addProductCatid" data-options="delay:1000,required:true,height:30" />
+            </tr>
+            <tr id="visitdisplaycolor">
+                <td><input name="color" class="easyui-textbox" id="colorAdd" data-options="delay:1000,height:30,width:35" />:</td>
+                <td><table><tr id="colorAppend">
+                </tr></table></td>
+            </tr>
+            <tr id="visitdisplaynorm">
+                <td><input name="norm"  id="normAdd" class="easyui-textbox"  data-options="delay:1000,height:30,width:35"/>:</td>
+                <td><table><tr id="normAppend">
+                </tr></table></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <table id="priceList">
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>图片1:</td>
+                <td><input name="pic1" class="easyui-textbox addimg" data-options="delay:1000,required:true,height:30"  />
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" id="addcategoryimg0" style="width:90px">上传</a>
+                </td>
+            </tr>
+            <tr>
+                <td>图片2:</td>
+                <td><input name="pic2" class="easyui-textbox addimg1" data-options="delay:1000,height:30"  />
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" id="addcategoryimg1" style="width:90px">上传</a>
+                </td>
+            </tr>
+            <tr>
+                <td>图片3:</td>
+                <td><input name="pic3" class="easyui-textbox addimg2" data-options="delay:1000,height:30"  />
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" id="addcategoryimg2" style="width:90px">上传</a>
+                </td>
+            </tr>
+            <tr>
+                <td>价格:</td>
+                <td><input name="price" class="easyui-numberbox" data-options="delay:1000,height:30" value="0"/></td>
+            </tr>
+            <tr>
+                <td>分类推荐:</td>
+                <td><input type="checkbox" name="recommend" value="1" class="easyui-checkbox"/></td>
+            </tr>
+            <tr>
+                <td>特别推荐:</td>
+                <td><input type="checkbox" name="particular" value="1" class="easyui-checkbox"/></td>
+            </tr>
+            <tr>
+                <td>库存:</td>
+                <td><input name="storage" class="easyui-numberbox" data-options="delay:1000,height:30" value="0"/></td>
+            </tr>
+            <tr>
+                <td>排序:</td>
+                <td><input name="sort" class="easyui-numberbox" data-options="delay:1000,height:30" value="0"/></td>
+            </tr>
+            <tr>
+                <td>详情:</td>
+                <td><textarea name="intro" class="addintro" style="width:600px;height:400px;"></textarea></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-check" onclick="addProductSubmit()" style="width:90px">保存</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-remove" onclick="javascript:$('#addProduct').dialog('close')" style="width:90px">取消</a></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </form>
+</div>
+<div id="editProduct" class="easyui-dialog" title="编辑" style="width:800px;height:700px;padding:10px 20px;" closed="true" modal="true">
+    <form id="editProductForm" method="post">
+        <input type="hidden" name="id" value="">
+        <table>
+            <tr>
+                <td>标题:</td>
+                <td><input name="name" class="easyui-textbox" data-options="delay:1000,required:true,height:30" /></td>
+            </tr>
+            <tr>
+                <td>分类:</td>
+                <td><input id="category_edit" name="category" value=""  data-options="delay:1000,required:true,multiple:false">
+                    <input id="category_edit_id" name="category_id" value="" type="text">
+                </td>
+            </tr>
+
+            <tr>
+                <td>图片2:</td>
+                <td><input name="pic2" class="easyui-textbox editimg1" data-options="delay:1000,height:30"  />
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" id="editcategoryimg1" style="width:90px">上传</a>
+                </td>
+            </tr>
+            <tr>
+                <td>图片3:</td>
+                <td><input name="pic3" class="easyui-textbox editimg2" data-options="delay:1000,height:30"  />
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-plus" id="editcategoryimg2" style="width:90px">上传</a>
+                </td>
+            </tr>
+            <tr>
+                <td>价格:</td>
+                <td><input name="price" class="easyui-numberbox" data-options="delay:1000,height:30" value="0"/></td>
+            </tr>
+            <tr>
+                <td>分类推荐:</td>
+                <td><input type="checkbox" name="recommend" value="1" class="easyui-checkbox editProductRecommendCheckbox"/></td>
+            </tr>
+            <tr>
+                <td>特别推荐:</td>
+                <td><input type="checkbox" name="particular" value="1" class="easyui-checkbox editProductCheckbox"/></td>
+            </tr>
+            <tr>
+                <td>库存:</td>
+                <td><input name="storage" class="easyui-numberbox" data-options="delay:1000,height:30" value="0"/></td>
+            </tr>
+            <tr>
+                <td>排序:</td>
+                <td><input name="sort" class="easyui-numberbox" data-options="delay:1000,height:30" value="0"/></td>
+            </tr>
+            <tr>
+                <td>内容:</td>
+                <td><textarea name="intro" class="editcontent" style="width:600px;height:400px;visibility:hidden;"></textarea></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-check" onclick="editProductSubmit()" style="width:90px">保存</a>
+                    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="fa fa-remove" onclick="javascript:$('#editProduct').dialog('close')" style="width:90px">取消</a></td>
+            </tr>
+        </table>
+
+    </form>
+</div>
 <div class="imgdlg"><img class="simg"></div>
 <script type="text/javascript">
     var GLOBALUrl= "{:C('GLOBAL_PIC_URL')}";
@@ -286,6 +432,10 @@
     var editNormUrl = "{:U('Admin/CategoryNorm/edit')}";
     var deleteNormUrl = "{:U('Admin/CategoryNorm/delete')}";
     var productListUrl = "{:U('Admin/Product/ajaxProductList')}";
+    var addUrl= "{:U('Admin/Product/add')}";
+    var editUrl= "{:U('Admin/Product/edit')}";
+    var deleteUrl= "{:U('Admin/Product/delete')}";
+    var selectNormByCatidUrl= "{:U('Admin/CategoryNorm/selectNormByCatid')}";
 </script>
 </body>
 </html>

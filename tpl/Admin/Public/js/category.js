@@ -146,12 +146,22 @@ function listChild(){
 function formatOper(val,row,index){
 
   /*  var btn2 = '<a class="editcls" style="color:#666666"  onclick="catogy(\''+row.id+'\')" href="javascript:void(0)"> 分类属性管理 |  </a>';*/
-    var print = '<a class="editcls" style="color:#666666" onclick="product(\''+row.id+'\')" href="javascript:void(0)"> 商品管理  </a>';
+    var print = '<a class="editcls" style="color:#666666" onclick="product(\''+row.id+'\',\''+row.name+'\',\''+row.norm+'\',\''+row.color+'\')" href="javascript:void(0)"> 商品管理  </a>';
     var btnop =  print;
     return btnop;
 }
 
-function  product(catid){
+function  product(catid,name,norm,color){
+    var name = name;
+    var catid = catid;
+    var norm = norm;
+    var color = color ;
+    console.log(color+",,"+norm);
+    $('#listcolorname').val(color);
+    $('#listnormname').val(norm);
+
+    $('#catname').textbox('setValue',name);
+    $('#pcatid').textbox('setValue',catid);
     $('#productDlg').dialog('open').dialog('setTitle','商品列表');
     $('#productlistGrid').datagrid({
         url:productListUrl+'/catId/'+catid,

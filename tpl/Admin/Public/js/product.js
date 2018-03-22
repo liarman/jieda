@@ -87,18 +87,171 @@ $(document).ready(function(){
 
 var url;
 function addProduct(){
-    $('#addProduct').dialog('open').dialog('setTitle','添加账号');
-    $('#addProductForm').form('clear');
-    $('#category').combobox({
-        url: ajaxCategoryAllUrl ,
-        valueField:'id',
-        textField:'name',
-        multiple:false,
-        onChange:function(){
-            $("#category_id").val($('#category').combobox('getValues').join(','));
+    $('#addProduct').dialog('open').dialog('setTitle','添加商品');
+    /**
+     * 不知道商品是否有规格、外观、先隐藏
+     * 判断如果有则就显示并显示出数据
+     */
+    //防止每次点开就追加一次
+    $("#colorAppend").html("");
+    $("#normAppend").html("");
+    $("#priceList").html("");
+
+
+
+    $('#visitdisplaycolor').hide();
+    $('#visitdisplaynorm').hide();
+
+    var catname = $('#catname').val();
+    var pcatid = $('#pcatid').val();
+    var Normhtml="";
+    var Colorhtml="";
+    var listcolorname = $('#listcolorname').val();
+    var listnormname = $('#listnormname').val();
+    console.log("pcatid"+pcatid);
+    $.post(selectNormByCatidUrl, {"catid":pcatid}, function(message){
+        console.log(message);
+        $('#addProductForm').form('clear');
+        if(message['Norm'].length !=0){
+            $('#visitdisplaynorm').show();
+        }else{
+            $('#visitdisplaynorm').hide();
         }
+        if(message['Color'].length  !=0){
+            $('#visitdisplaycolor').show();
+        }else{
+            $('#visitdisplaycolor').hide();
+        }
+        for(var i=0;i<message['Color'].length;i++){
+            Colorhtml+='<td width="130"><input type="checkbox"  class="color"  name="color[]" id="' + message['Color'][i]['id'] + '" value="' + message['Color'][i]['id'] + '"    atr="' + message['Color'][i]['value'] + '" />&nbsp;&nbsp;<label for="' + message['Color'][i]['id'] + '">' + message['Color'][i]['value'] + '</label></td>';
+        }
+        $("#colorAppend").html(Colorhtml);
+        for(var i=0;i<message['Norm'].length;i++){
+            Normhtml+='<td width="130"><input type="checkbox"   class="norms"   name="norms[]"   id="' + message['Norm'][i]['id'] + '"  value="' + message['Norm'][i]['id'] + '"  atr="' + message['Norm'][i]['value'] + '" />&nbsp;&nbsp;<label for="' + message['Norm'][i]['id'] + '">' + message['Norm'][i]['value'] + '</label></td>';
+        }
+        $("#normAppend").html(Normhtml);
+
+        $('#addProductCatname').textbox('setValue',catname);
+        $('#addProductCatid').val(pcatid);
+        $('#normAdd').textbox('setValue',listnormname);
+        $('#colorAdd').textbox('setValue',listcolorname);
+
+        var oldselect = [];
+        //不知道干什么用的
+      /*  $(".editselect").each(function(){
+            var t = $(this).val().split(",");
+            oldselect[t[1] + '_' + t[3]] = new Array(t[0], t[1], t[2], t[3], t[4], t[5], t[6], t[7]);
+        });*/
+        $(".color").click(function(){
+            var selectValue = [];
+            var html = '';
+            var header = '<tr><th width="130">产品外观</th><th width="130">产品规格</th><th width="130">价格</th><th width="130">会员价</th><th width="130">数量</th></tr>';
+            console.log("NormsHtml:"+$(".norms").html());
+            if ($(".norms").html() == null ||$(".norms").html() == "") {
+                  $(".color").each(function(){
+                    if ($(this).prop('checked')) {
+                        var color = $(this).attr('atr');
+                        var colorid = $(this).val();
+                        selectValue[colorid + '_' + 0] = new Array(0, colorid, color, 0, '', 0, 0, 0);
+                    }
+                });
+            } else {
+                $(".color").each(function(){
+                    if ($(this).attr('checked')) {
+                        var color = $(this).attr('atr');
+                        var colorid = $(this).val();
+                        $(".norms").each(function(){
+                            if ($(this).prop('checked')) {
+                                var norms = $(this).attr('atr');
+                                var normsid = $(this).val();
+                                console.log("normsid1:"+normsid+"colorid1:"+colorid);
+                                selectValue[colorid + '_' + normsid] = new Array(0, colorid, color, normsid, norms, 0, 0, 0);
+                            }
+                        });
+                    }
+                });
+            }
+           for (var index in selectValue) {
+                if (oldselect[index] != null && oldselect[index] != '') {
+                    html += '<tr class="tnorms"><td width="130">' + oldselect[index][2] + '<input type="hidden" value="' + oldselect[index][1] + '"/></td>';
+                    html += '<td width="130">' + oldselect[index][4] + '<input type="hidden" value="' + oldselect[index][3] + '"/></td>';
+                    html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][5] + '"/></td>';
+                    html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][6] + '"/></td>';
+                    html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][7] + '"/></td>';
+                    html += '<td><input type="hidden" value="' + oldselect[index][0] + '"/></td></tr>';
+                } else {
+                    html += '<tr class="tnorms"><td width="130">' + selectValue[index][2] + '<input type="hidden" value="' + selectValue[index][1] + '"/></td>';
+                    html += '<td width="130">' + selectValue[index][4] + '<input type="hidden" value="' + selectValue[index][3] + '"/></td>';
+                    html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][5] + '"/></td>';
+                    html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][6] + '"/></td>';
+                    html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][7] + '"/></td>';
+                    html += '<td><input type="hidden" value="' + selectValue[index][0] + '"/></td></tr>';
+                }
+            }
+            if (html != '') {
+                $("#priceList").html(header + html);
+            } else {
+                $("#priceList").html('');
+            }
+        });
+        $(".norms").click(function(){
+            var selectValue = [];
+            var html = '';
+            var header = '<tr><th width="130">产品外观</th><th width="130">产品规格</th><th width="130">价格</th><th width="130">会员价</th><th width="130">数量</th></tr>';
+            console.log("ColorHtml:"+$(".color").html());
+            if ($(".color").html() == null || $(".color").html() =="") {
+                  $(".norms").each(function(){
+                    if ($(this).prop('checked')) {
+                        var norms = $(this).attr('atr');
+                        var normsid = $(this).val();
+                        selectValue[0 + '_' + normsid] = new Array(0, 0, '', normsid, norms, 0, 0, 0);
+                    }
+                });
+            } else {
+                $(".color").each(function(){
+                    if ($(this).attr('checked')) {
+                        var color = $(this).attr('atr');
+                        var colorid = $(this).val();
+                        $(".norms").each(function(){
+                            if ($(this).prop('checked')) {
+                                var norms = $(this).attr('atr');
+                                var normsid = $(this).val();
+                                console.log("normsid2:"+normsid+"colorid2:"+colorid);
+                                selectValue[colorid + '_' + normsid] = new Array(0, colorid, color, normsid, norms, 0, 0, 0);
+                            }
+                        });
+                    }
+                });
+            }
+            for (var index in selectValue) {
+                if (oldselect[index] != null && oldselect[index] != '') {
+                    html += '<tr class="tnorms"><td width="130">' + oldselect[index][2] + '<input type="hidden" value="' + oldselect[index][1] + '"/></td>';
+                    html += '<td width="130">' + oldselect[index][4] + '<input type="hidden" value="' + oldselect[index][3] + '"/></td>';
+                    html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][5] + '"/></td>';
+                    html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][6] + '"/></td>';
+                    html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + oldselect[index][7] + '"/></td>';
+                    html += '<td><input type="hidden" value="' + oldselect[index][0] + '"/></td></tr>';
+                } else {
+                    html += '<tr class="tnorms"><td width="130">' + selectValue[index][2] + '<input type="hidden" value="' + selectValue[index][1] + '"/></td>';
+                    html += '<td width="130">' + selectValue[index][4] + '<input type="hidden" value="' + selectValue[index][3] + '"/></td>';
+                    html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][5] + '"/></td>';
+                    html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][6] + '"/></td>';
+                    html += '<td width="130"><input type="text" class="px" style="width:60px;" value="' + selectValue[index][7] + '"/></td>';
+                    html += '<td><input type="hidden" value="' + selectValue[index][0] + '"/></td></tr>';
+                }
+            }
+            if (html != '') {
+                $("#priceList").html(header + html);
+            } else {
+                $("#priceList").html('');
+            }
+        });
+
+        url= addUrl ;
+
+
     });
-    url= addUrl ;
+
 }
 
 function doSearch(){
@@ -170,18 +323,6 @@ function editProduct(){
             marketprice:row.marketprice
         });
         editor2.html(row.intro);
-//            alert(row.intro);
-        $('#category_edit').combobox({
-            url: ajaxCategoryAllUrl +'/id/' +row.id,
-            valueField:'id',
-            textField:'name',
-            multiple:false,
-            onChange:function(){
-                $("#category_edit_id").val($('#category_edit').combobox('getValues').join(','));
-
-            }
-        });
-        $('#category_edit').combobox('setValue', row.category_id);
         url = editUrl +'/id/'+row.id;
     }
 }

@@ -108,6 +108,15 @@ class CategoryNormController extends AdminBaseController{
 		$this->ajaxReturn($data,'JSON');
 	}
 
+public   function  selectNormByCatid(){
+	$catid=I('post.catid');
+	$Norm=D('CategoryNorm')->where(array('catid'=>$catid,'type'=>0))->select();
+	$Color=D('CategoryNorm')->where(array('catid'=>$catid,'type'=>1))->select();
+	$message['Norm'] = $Norm;
+	$message['Color'] = $Color;
+	$this->ajaxReturn($message,'JSON');
 
+
+}
 
 }
