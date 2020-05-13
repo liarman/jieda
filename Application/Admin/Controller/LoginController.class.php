@@ -38,7 +38,7 @@ class LoginController extends BaseController{
 				$loginrecord['userid']=$data['id'];
 				$loginrecord['loginTime']=date('Y-m-d H:i:s');
 				$loginrecord['loginip']=get_client_ip();
-				$loginrecord['area']=getCityFromIp($loginrecord['loginip']);
+//				$loginrecord['area']=getCityFromIp($loginrecord['loginip']);
 				M('LoginAdmin')->add($loginrecord);
 				$message['status']=1;
 				$message['message']='登录成功';
